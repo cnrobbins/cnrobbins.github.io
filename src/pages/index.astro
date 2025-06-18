@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Calder Robbins - Creative Developer">
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          <span class="hero-line">
+            <span class="hero-word" data-text="Creative">Creative</span>
+          </span>
+          <span class="hero-line">
+            <span class="hero-word" data-text="Developer">Developer</span>
+          </span>
+          <span class="hero-line">
+            <span class="hero-word" data-text="&">& </span>
+            <span class="hero-word" data-text="Designer">Designer</span>
+          </span>
+        </h1>
+        <p class="hero-subtitle">
+          I craft digital experiences that blend aesthetics with functionality,
+          bringing ideas to life through code and creativity.
+        </p>
+        <div class="hero-cta">
+          <a href="/projects" class="btn btn--primary">
+            <span class="btn-text">View My Work</span>
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="/contact" class="btn btn--secondary">
+            <span class="btn-text">Get In Touch</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-cube" id="hero-cube">
+          <div class="cube-face cube-face--front"></div>
+          <div class="cube-face cube-face--back"></div>
+          <div class="cube-face cube-face--right"></div>
+          <div class="cube-face cube-face--left"></div>
+          <div class="cube-face cube-face--top"></div>
+          <div class="cube-face cube-face--bottom"></div>
+        </div>
+        <div class="hero-particles" id="hero-particles"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2 class="section-title" data-text="About Me">About Me</h2>
+          <div class="about-description">
+            <p class="fade-in">
+              I'm a passionate developer who believes in the power of thoughtful design 
+              and clean code. With a background in both technical development and creative 
+              design, I bridge the gap between form and function.
+            </p>
+            <p class="fade-in">
+              My expertise spans modern web technologies, animation, and user experience 
+              design. I love creating websites that not only look stunning but perform 
+              flawlessly across all devices.
+            </p>
+          </div>
+          <div class="about-skills">
+            <div class="skill-category">
+              <h3>Frontend</h3>
+              <ul>
+                <li>React & Vue.js</li>
+                <li>TypeScript</li>
+                <li>GSAP & Three.js</li>
+                <li>Modern CSS</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Backend</h3>
+              <ul>
+                <li>Node.js</li>
+                <li>Python</li>
+                <li>Databases</li>
+                <li>APIs</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Design</h3>
+              <ul>
+                <li>UI/UX Design</li>
+                <li>Figma</li>
+                <li>Adobe Creative Suite</li>
+                <li>3D Modeling</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="about-image">
+            <img src="/images/profile.jpg" alt="CN Robbins" class="profile-img" />
+            <div class="image-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Preview -->
+  <section class="projects-preview" id="projects-preview">
+    <div class="container">
+      <h2 class="section-title" data-text="Featured Work">Featured Work</h2>
+      <div class="projects-grid">
+        <article class="project-card" data-category="web">
+          <div class="project-overlay">
+            <h3 class="project-title">E-commerce Platform</h3>
+            <p class="project-description">Modern shopping experience with smooth animations</p>
+            <div class="project-tech">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">GSAP</span>
+              <span class="tech-tag">Node.js</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="project-card" data-category="design">
+          <div class="project-overlay">
+            <h3 class="project-title">Brand Identity</h3>
+            <p class="project-description">Complete visual identity for tech startup</p>
+            <div class="project-tech">
+              <span class="tech-tag">Figma</span>
+              <span class="tech-tag">Illustrator</span>
+              <span class="tech-tag">After Effects</span>
+            </div>
+          </div>
+        </article>
+        
+        <article class="project-card" data-category="3d">
+          <div class="project-overlay">
+            <h3 class="project-title">3D Web Experience</h3>
+            <p class="project-description">Interactive 3D portfolio with WebGL</p>
+            <div class="project-tech">
+              <span class="tech-tag">Three.js</span>
+              <span class="tech-tag">WebGL</span>
+              <span class="tech-tag">Blender</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="projects-cta">
+        <a href="/projects" class="btn btn--outline">
+          <span class="btn-text">View All Projects</span>
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="contact-cta" id="contact-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Let's Create Something Amazing Together</h2>
+        <p class="cta-description">
+          Ready to bring your ideas to life? I'd love to hear about your project.
+        </p>
+        <a href="/contact" class="btn btn--primary btn--large">
+          <span class="btn-text">Start a Conversation</span>
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout> 
