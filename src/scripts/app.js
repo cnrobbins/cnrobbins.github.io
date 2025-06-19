@@ -42,7 +42,6 @@ class PortfolioApp {
     // Initialize each component
     this.initCustomCursor();
     this.initScrollAnimations();
-    this.initHeroAnimations();
     this.initProjectHovers();
   }
 
@@ -74,36 +73,21 @@ class PortfolioApp {
       el.addEventListener('mouseenter', () => {
         gsap.to(this.cursor, { scale: 2, duration: 0.3 });
         gsap.to(this.cursorFollower, { scale: 1.5, duration: 0.3 });
+        this.cursor.classList.add('on-hover');
+        this.cursorFollower.classList.add('on-hover');
       });
       
       el.addEventListener('mouseleave', () => {
         gsap.to(this.cursor, { scale: 1, duration: 0.3 });
         gsap.to(this.cursorFollower, { scale: 1, duration: 0.3 });
+        this.cursor.classList.remove('on-hover');
+        this.cursorFollower.classList.remove('on-hover');
       });
     });
   }
 
   startLoadingAnimation() {
-    const loadingChars = document.querySelectorAll('.loading-char');
-    
-    if (loadingChars.length === 0) {
-      this.finishLoading();
-      return;
-    }
-
-    gsap.fromTo(loadingChars, {
-      opacity: 0,
-      y: 20
-    }, {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: 'back.out(1.7)',
-      onComplete: () => {
-        setTimeout(() => this.finishLoading(), 1000);
-      }
-    });
+    setTimeout(() => this.finishLoading(), 1500); // Wait 1.5s
   }
 
   finishLoading(animate = true) {
@@ -148,7 +132,6 @@ class PortfolioApp {
     const heroWords = document.querySelectorAll('.hero-word');
     const heroSubtitle = document.querySelector('.hero-subtitle');
     const heroCTA = document.querySelector('.hero-cta');
-    const heroCube = document.querySelector('.hero-cube');
 
     heroWords.forEach((word, index) => {
       const chars = word.textContent.split('').map(char => `<span style="display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
@@ -174,29 +157,6 @@ class PortfolioApp {
     if (heroCTA) {
       gsap.fromTo(heroCTA, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, delay: 1.7, ease: 'power3.out' });
     }
-    if (heroCube) {
-      gsap.fromTo(heroCube, { opacity: 0, scale: 0.8, rotationX: -90 }, { opacity: 1, scale: 1, rotationX: 0, duration: 1, delay: 1.2, ease: 'back.out(1.7)' });
-    }
-  }
-
-  initHeroAnimations() {
-    const heroCube = document.getElementById('hero-cube');
-    if (!heroCube) return;
-
-    document.addEventListener('mousemove', (e) => {
-      const rect = heroCube.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const deltaX = (e.clientX - centerX) / rect.width;
-      const deltaY = (e.clientY - centerY) / rect.height;
-      
-      gsap.to(heroCube, {
-        rotationY: deltaX * 30,
-        rotationX: -deltaY * 30,
-        duration: 0.5,
-        ease: 'power2.out'
-      });
-    });
   }
 
   initScrollAnimations() {

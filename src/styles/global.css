@@ -223,17 +223,10 @@ ol {
   z-index: var(--z-modal);
 }
 
-.loading-text {
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-mono);
-  color: var(--color-accent);
-}
-
-.loading-char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(20px);
+.loading-screen img {
+  max-width: 200px;
+  max-height: 200px;
+  transform: scale(3.0);
 }
 
 /* Custom cursor */
@@ -248,6 +241,16 @@ ol {
   pointer-events: none;
   z-index: var(--z-tooltip);
   mix-blend-mode: difference;
+}
+
+.cursor.on-hover {
+  mix-blend-mode: normal;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.cursor-follower.on-hover {
+  mix-blend-mode: normal;
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .cursor {

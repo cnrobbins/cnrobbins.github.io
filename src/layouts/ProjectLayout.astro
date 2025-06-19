@@ -6,44 +6,49 @@ import '../styles/components.css';
 export interface Props {
   title: string;
   description?: string;
+  projectTheme: 'yellow' | 'blue' | 'red';
 }
 
-const { title, description = "Calder Robbins - Creative Developer & Designer" } = Astro.props;
+const { title, description, projectTheme = 'yellow' } = Astro.props;
+
+const themeColors = {
+  yellow: {
+    '--color-accent': '#F5CD4D',
+    '--color-accent-hover': '#e8b92b',
+  },
+  blue: {
+    '--color-accent': '#515BE5',
+    '--color-accent-hover': '#3a44d9',
+  },
+  red: {
+    '--color-accent': '#EB3132',
+    '--color-accent-hover': '#d41a1b',
+  }
+}
+
+const themeStyle = Object.entries(themeColors[projectTheme]).map(([key, value]) => `${key}: ${value}`).join(';');
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style={themeStyle}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     
-    <!-- Preconnect to external fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     
     <title>{title}</title>
     
-    <!-- Theme and color scheme -->
-    <meta name="theme-color" content="#6366f1" />
+    <meta name="theme-color" content={themeColors[projectTheme]['--color-accent']} />
     <meta name="color-scheme" content="dark light" />
     
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
-    <!-- Custom cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-follower" id="cursor-follower"></div>
-    
-    <!-- Loading screen -->
-    <div class="loading-screen" id="loading-screen">
-      <img src="/assets/skeleton_walking.gif" alt="Loading animation" />
-    </div>
-
-    <!-- Navigation -->
     <nav class="nav" id="nav">
       <div class="nav-brand">
         <a href="/" class="nav-logo">CR</a>
@@ -54,17 +59,12 @@ const { title, description = "Calder Robbins - Creative Developer & Designer" } 
         <li><a href="/#about" class="nav-link" data-text="About">About</a></li>
         <li><a href="/#contact" class="nav-link" data-text="Contact">Contact</a></li>
       </ul>
-      <div class="nav-theme">
-        <!-- Theme toggle removed -->
-      </div>
     </nav>
 
-    <!-- Main content -->
     <main class="main">
       <slot />
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
       <div class="footer-content">
         <p>&copy; 2025 Calder Robbins</p>
@@ -76,10 +76,5 @@ const { title, description = "Calder Robbins - Creative Developer & Designer" } 
         </div>
       </div>
     </footer>
-
-    <!-- Scripts -->
-    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="../scripts/app.js"></script>
   </body>
 </html> 

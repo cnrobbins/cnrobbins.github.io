@@ -23,26 +23,9 @@ import Layout from '../layouts/Layout.astro';
           I craft digital experiences that blend aesthetics with functionality,
           bringing ideas to life through code and creativity.
         </p>
-        <div class="hero-cta">
-          <a href="/projects" class="btn btn--primary">
-            <span class="btn-text">View My Work</span>
-            <span class="btn-arrow">→</span>
-          </a>
-          <a href="/contact" class="btn btn--secondary">
-            <span class="btn-text">Get In Touch</span>
-          </a>
-        </div>
       </div>
       <div class="hero-visual">
-        <div class="hero-cube" id="hero-cube">
-          <div class="cube-face cube-face--front"></div>
-          <div class="cube-face cube-face--back"></div>
-          <div class="cube-face cube-face--right"></div>
-          <div class="cube-face cube-face--left"></div>
-          <div class="cube-face cube-face--top"></div>
-          <div class="cube-face cube-face--bottom"></div>
-        </div>
-        <div class="hero-particles" id="hero-particles"></div>
+        <img src="/assets/skeleton_walking.gif" alt="Dynamic animation" />
       </div>
     </div>
   </section>
@@ -106,48 +89,38 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Projects Preview -->
-  <section class="projects-preview" id="projects-preview">
+  <section class="projects-preview" id="projects">
     <div class="container">
       <h2 class="section-title" data-text="Featured Work">Featured Work</h2>
       <div class="projects-grid">
-        <article class="project-card" data-category="web">
-          <div class="project-overlay">
-            <h3 class="project-title">E-commerce Platform</h3>
-            <p class="project-description">Modern shopping experience with smooth animations</p>
-            <div class="project-tech">
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">GSAP</span>
-              <span class="tech-tag">Node.js</span>
+        <a href="/projects/current-work" class="project-card-link">
+          <article class="project-card" data-category="web">
+            <div class="project-content">
+              <img src="/assets/current_work.png" alt="Current Work Icon" class="project-icon" />
+              <h3 class="project-title">Current Work</h3>
             </div>
-          </div>
-        </article>
+          </article>
+        </a>
         
-        <article class="project-card" data-category="design">
-          <div class="project-overlay">
-            <h3 class="project-title">Brand Identity</h3>
-            <p class="project-description">Complete visual identity for tech startup</p>
-            <div class="project-tech">
-              <span class="tech-tag">Figma</span>
-              <span class="tech-tag">Illustrator</span>
-              <span class="tech-tag">After Effects</span>
+        <a href="/projects/papers-and-presentations" class="project-card-link">
+          <article class="project-card" data-category="design">
+            <div class="project-content">
+              <img src="/assets/papers_presentations.png" alt="Papers and Presentations Icon" class="project-icon" />
+              <h3 class="project-title">Papers and Presentations</h3>
             </div>
-          </div>
-        </article>
+          </article>
+        </a>
         
-        <article class="project-card" data-category="3d">
-          <div class="project-overlay">
-            <h3 class="project-title">3D Web Experience</h3>
-            <p class="project-description">Interactive 3D portfolio with WebGL</p>
-            <div class="project-tech">
-              <span class="tech-tag">Three.js</span>
-              <span class="tech-tag">WebGL</span>
-              <span class="tech-tag">Blender</span>
+        <a href="/projects/previous-work" class="project-card-link">
+          <article class="project-card" data-category="3d">
+            <div class="project-content">
+              <h3 class="project-title">Previous Work</h3>
             </div>
-          </div>
-        </article>
+          </article>
+        </a>
       </div>
       <div class="projects-cta">
-        <a href="/projects" class="btn btn--outline">
+        <a href="/#projects" class="btn btn--outline">
           <span class="btn-text">View All Projects</span>
           <span class="btn-arrow">→</span>
         </a>
@@ -156,14 +129,14 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <!-- Contact CTA -->
-  <section class="contact-cta" id="contact-cta">
+  <section class="contact-cta" id="contact">
     <div class="container">
       <div class="cta-content">
         <h2 class="cta-title">Let's Create Something Amazing Together</h2>
         <p class="cta-description">
           Ready to bring your ideas to life? I'd love to hear about your project.
         </p>
-        <a href="/contact" class="btn btn--primary btn--large">
+        <a href="/#contact" class="btn btn--primary btn--large">
           <span class="btn-text">Start a Conversation</span>
           <span class="btn-arrow">→</span>
         </a>
