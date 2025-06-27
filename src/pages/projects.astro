@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CurrentWorkSection from '../components/CurrentWorkSection.astro';
+import PreviousWorkSection from '../components/PreviousWorkSection.astro';
+import PapersAndPresentationsSection from '../components/PapersAndPresentationsSection.astro';
+---
+<Layout title="All Projects - Calder Robbins">
+  <div class="all-projects-page">
+    <section id="current-work" class="project-section theme-yellow">
+      <CurrentWorkSection />
+    </section>
+    <section id="previous-work" class="project-section theme-red">
+      <PreviousWorkSection />
+    </section>
+    <section id="papers-and-presentations" class="project-section theme-blue">
+      <PapersAndPresentationsSection />
+    </section>
+  </div>
+</Layout> 

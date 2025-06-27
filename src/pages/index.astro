@@ -2,26 +2,24 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Calder Robbins - Creative Developer">
+<Layout title="Calder Robbins - Biomechanics Researcher & Engineer">
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="hero-content">
       <div class="hero-text">
+        <p class="hero-name">Calder Robbins</p>
         <h1 class="hero-title">
           <span class="hero-line">
-            <span class="hero-word" data-text="Creative">Creative</span>
-          </span>
-          <span class="hero-line">
-            <span class="hero-word" data-text="Developer">Developer</span>
+            <span class="hero-word" data-text="Biomechanics">Biomechanics</span>
+            <span class="hero-word" data-text="Researcher">Researcher</span>
           </span>
           <span class="hero-line">
             <span class="hero-word" data-text="&">& </span>
-            <span class="hero-word" data-text="Designer">Designer</span>
+            <span class="hero-word" data-text="Engineer">Engineer</span>
           </span>
         </h1>
         <p class="hero-subtitle">
-          I craft digital experiences that blend aesthetics with functionality,
-          bringing ideas to life through code and creativity.
+          Developing assistive technologies through neuromechanical simulation to enhance human mobility
         </p>
       </div>
       <div class="hero-visual">
@@ -38,49 +36,49 @@ import Layout from '../layouts/Layout.astro';
           <h2 class="section-title" data-text="About Me">About Me</h2>
           <div class="about-description">
             <p class="fade-in">
-              I'm a passionate developer who believes in the power of thoughtful design 
-              and clean code. With a background in both technical development and creative 
-              design, I bridge the gap between form and function.
-            </p>
-            <p class="fade-in">
-              My expertise spans modern web technologies, animation, and user experience 
-              design. I love creating websites that not only look stunning but perform 
-              flawlessly across all devices.
+              A native of Western Massachusetts, I attended UMass Amherst for both my B.S. in Biomedical Engineering (2023) and my M.S. in Mechanical Engineering (2024). Working under the guidance of Prof. Wouter Hookgamer in the UMass Kinesiology Department, I studied human biomechanics and performance running footwear. Then under the joint guidance of Prof. Hookgamer and Prof. Meghan Huber, I worked on a variable stiffness footwear project and was eager to dive more into the world of wearable devices for rehabilitation and human-centered robotics. I now work in Northeastern's NeuMove Laboratory under Prof. Seungmoon Song where I study biomechanics, neuromechanical simulation, and rehabilitative device design and control. Outside of class and lab work, I am a passionate wildlife photographer, and love biking and hiking with my two dogs.
             </p>
           </div>
           <div class="about-skills">
             <div class="skill-category">
-              <h3>Frontend</h3>
+              <h3>Programming</h3>
               <ul>
-                <li>React & Vue.js</li>
-                <li>TypeScript</li>
-                <li>GSAP & Three.js</li>
-                <li>Modern CSS</li>
+                <li>Python</li>
+                <li>MATLAB</li>
+                <li>Arduino</li>
               </ul>
             </div>
             <div class="skill-category">
-              <h3>Backend</h3>
+              <h3>Modeling</h3>
               <ul>
-                <li>Node.js</li>
-                <li>Python</li>
-                <li>Databases</li>
-                <li>APIs</li>
+                <li>SolidWorks</li>
+                <li>MuJoCo</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Experimental</h3>
+              <ul>
+                <li>Motion Capture</li>
+                <li>EMG</li>
+                <li>OpenSim</li>
+                <li>MyoSuite</li>
               </ul>
             </div>
             <div class="skill-category">
               <h3>Design</h3>
               <ul>
-                <li>UI/UX Design</li>
-                <li>Figma</li>
                 <li>Adobe Creative Suite</li>
-                <li>3D Modeling</li>
+                <li>UI Design</li>
               </ul>
             </div>
           </div>
+          <a href="/assets/CR_CV.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="margin-top: 2rem;">
+            Download CV
+          </a>
         </div>
         <div class="about-visual">
           <div class="about-image">
-            <img src="/images/profile.jpg" alt="CN Robbins" class="profile-img" />
+            <img src="/assets/pfp.jpg" alt="CN Robbins" class="profile-img" />
             <div class="image-overlay"></div>
           </div>
         </div>
@@ -93,25 +91,23 @@ import Layout from '../layouts/Layout.astro';
     <div class="container">
       <h2 class="section-title" data-text="Featured Work">Featured Work</h2>
       <div class="projects-grid">
-        <a href="/projects/current-work" class="project-card-link">
+        <a href="/projects#current-work" class="project-card-link">
           <article class="project-card" data-category="web">
             <div class="project-content">
-              <img src="/assets/current_work.png" alt="Current Work Icon" class="project-icon" />
               <h3 class="project-title">Current Work</h3>
             </div>
           </article>
         </a>
         
-        <a href="/projects/papers-and-presentations" class="project-card-link">
+        <a href="/projects#papers-and-presentations" class="project-card-link">
           <article class="project-card" data-category="design">
             <div class="project-content">
-              <img src="/assets/papers_presentations.png" alt="Papers and Presentations Icon" class="project-icon" />
               <h3 class="project-title">Papers and Presentations</h3>
             </div>
           </article>
         </a>
         
-        <a href="/projects/previous-work" class="project-card-link">
+        <a href="/projects#previous-work" class="project-card-link">
           <article class="project-card" data-category="3d">
             <div class="project-content">
               <h3 class="project-title">Previous Work</h3>
@@ -120,7 +116,7 @@ import Layout from '../layouts/Layout.astro';
         </a>
       </div>
       <div class="projects-cta">
-        <a href="/#projects" class="btn btn--outline">
+        <a href="/projects" class="btn btn--outline">
           <span class="btn-text">View All Projects</span>
           <span class="btn-arrow">→</span>
         </a>
@@ -132,12 +128,9 @@ import Layout from '../layouts/Layout.astro';
   <section class="contact-cta" id="contact">
     <div class="container">
       <div class="cta-content">
-        <h2 class="cta-title">Let's Create Something Amazing Together</h2>
-        <p class="cta-description">
-          Ready to bring your ideas to life? I'd love to hear about your project.
-        </p>
-        <a href="/#contact" class="btn btn--primary btn--large">
-          <span class="btn-text">Start a Conversation</span>
+        <h2 class="cta-title">Contact Me</h2>
+        <a href="mailto:robbins.cal@northeastern.edu" class="btn btn--primary btn--large">
+          <span class="btn-text">Email</span>
           <span class="btn-arrow">→</span>
         </a>
       </div>
