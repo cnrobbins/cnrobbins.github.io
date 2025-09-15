@@ -133,20 +133,6 @@
   transform: translateZ(0);
 }
 
-/* 
-  The gradient styling for specific hero words has been removed.
-  All words will now inherit the default text color, fixing the rendering bug.
-*/
-/*
-.hero-word[data-text="Creative"],
-.hero-word[data-text="Developer"] {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-*/
-
 .hero-subtitle {
   font-size: var(--font-size-xl);
   color: var(--color-text-secondary);
