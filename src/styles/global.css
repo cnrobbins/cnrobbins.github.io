@@ -229,7 +229,7 @@ ol {
   transform: scale(3.0);
 }
 
-/* Custom cursor */
+/* Custom cursor (commented out; uncomment with Layout.astro cursor divs + app.js initCustomCursor to restore)
 .cursor,
 .cursor-follower {
   position: fixed;
@@ -268,13 +268,13 @@ ol {
   transition: all var(--duration-normal) var(--ease-out);
 }
 
-/* Hide custom cursor on touch devices */
 @media (hover: none) {
   .cursor,
   .cursor-follower {
     display: none;
   }
 }
+*/
 
 /* Main content */
 .main {

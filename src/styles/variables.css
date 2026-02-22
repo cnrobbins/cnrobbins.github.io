@@ -12,10 +12,10 @@
   --color-warning: #f59e0b;
   --color-error: #ef4444;
   
-  /* Project-specific colors */
-  --color-project-1: #F5CD4D;
+  /* Project-specific colors (1=Current=red, 2=Papers=blue, 3=Previous=yellow) */
+  --color-project-1: #EB3132;
   --color-project-2: #515BE5;
-  --color-project-3: #EB3132;
+  --color-project-3: #F5CD4D;
   
   /* Colors - Dark Mode */
   --color-bg-primary-dark: #0a0a0a;

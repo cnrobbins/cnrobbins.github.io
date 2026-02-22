@@ -7,8 +7,8 @@
 class PortfolioApp {
   constructor() {
     this.isLoaded = false;
-    this.cursor = null;
-    this.cursorFollower = null;
+    // this.cursor = null;
+    // this.cursorFollower = null;
     this.loadingScreen = null;
     
     this.init();
@@ -29,6 +29,7 @@ class PortfolioApp {
 
     if (sessionStorage.getItem('hasLoaded')) {
       this.finishLoading(false); // Skip animation
+      this.scheduleScrollToHash();
     } else {
       this.startLoadingAnimation();
     }
@@ -36,31 +37,28 @@ class PortfolioApp {
 
   initializeComponents() {
     this.loadingScreen = document.getElementById('loading-screen');
-    this.cursor = document.getElementById('cursor');
-    this.cursorFollower = document.getElementById('cursor-follower');
+    // this.cursor = document.getElementById('cursor');
+    // this.cursorFollower = document.getElementById('cursor-follower');
     
     // Initialize each component
-    this.initCustomCursor();
+    // this.initCustomCursor(); // Fancy cursor-follower (commented out)
     this.initScrollAnimations();
     this.initProjectHovers();
   }
 
+  /* Fancy cursor-follower (commented out; uncomment initCustomCursor call and cursor divs in Layout.astro to restore)
   initCustomCursor() {
     if (!this.cursor || !this.cursorFollower) return;
-    
     const hoverElements = document.querySelectorAll('a, button, .project-card');
-    
     document.addEventListener('mousemove', (e) => {
       const x = e.clientX;
       const y = e.clientY;
-      
       gsap.to(this.cursor, {
         x: x,
         y: y,
         duration: 0.1,
         ease: 'power2.out'
       });
-      
       gsap.to(this.cursorFollower, {
         x: x,
         y: y,
@@ -68,7 +66,6 @@ class PortfolioApp {
         ease: 'power2.out'
       });
     });
-
     hoverElements.forEach(el => {
       el.addEventListener('mouseenter', () => {
         gsap.to(this.cursor, { scale: 2, duration: 0.3 });
@@ -76,7 +73,6 @@ class PortfolioApp {
         this.cursor.classList.add('on-hover');
         this.cursorFollower.classList.add('on-hover');
       });
-      
       el.addEventListener('mouseleave', () => {
         gsap.to(this.cursor, { scale: 1, duration: 0.3 });
         gsap.to(this.cursorFollower, { scale: 1, duration: 0.3 });
@@ -85,6 +81,7 @@ class PortfolioApp {
       });
     });
   }
+  */
 
   startLoadingAnimation() {
     setTimeout(() => this.finishLoading(), 1500); // Wait 1.5s
@@ -110,6 +107,7 @@ class PortfolioApp {
         this.loadingScreen.style.display = 'none';
         this.isLoaded = true;
         this.animatePageIn();
+        this.scheduleScrollToHash();
       }
     });
   }
@@ -122,10 +120,33 @@ class PortfolioApp {
       y: 0,
       opacity: 1,
       duration: 0.8,
-      ease: 'power3.out'
+      ease: 'power3.out',
+      onComplete: () => {
+        // Fallback: scroll again in case nav animation reflow reset position
+        this.scrollToHash();
+      }
     });
 
     this.animateHeroContent();
+  }
+
+  /** Run scrollToHash after layout is ready (avoids wrong position when called too early). */
+  scheduleScrollToHash() {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => this.scrollToHash());
+    });
+  }
+
+  /** Scroll to URL hash target (e.g. /projects#current-work). */
+  scrollToHash() {
+    const hash = window.location.hash;
+    if (!hash) return;
+    const id = hash.slice(1);
+    const el = document.getElementById(id);
+    if (!el) return;
+    const navOffset = 100;
+    const top = el.getBoundingClientRect().top + window.scrollY - navOffset;
+    window.scrollTo({ top, left: 0, behavior: 'auto' });
   }
 
   animateHeroContent() {
@@ -133,23 +154,23 @@ class PortfolioApp {
     const heroSubtitle = document.querySelector('.hero-subtitle');
     const heroCTA = document.querySelector('.hero-cta');
 
-    heroWords.forEach((word, index) => {
-      const chars = word.textContent.split('').map(char => `<span style="display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
-      word.innerHTML = chars;
-      const charElements = word.querySelectorAll('span');
-      
-      gsap.fromTo(charElements, {
-        y: 100,
-        opacity: 0
-      }, {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.05,
-        delay: index * 0.2 + 1, // Start after loading
-        ease: 'back.out(1.7)'
-      });
-    });
+    // Wave text load for banner "Biomechanics & Robotics Researcher" (commented out for static title)
+    // heroWords.forEach((word, index) => {
+    //   const chars = word.textContent.split('').map(char => `<span style="display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+    //   word.innerHTML = chars;
+    //   const charElements = word.querySelectorAll('span');
+    //   gsap.fromTo(charElements, {
+    //     y: 100,
+    //     opacity: 0
+    //   }, {
+    //     y: 0,
+    //     opacity: 1,
+    //     duration: 0.8,
+    //     stagger: 0.05,
+    //     delay: index * 0.2 + 1, // Start after loading
+    //     ease: 'back.out(1.7)'
+    //   });
+    // });
 
     if (heroSubtitle) {
       gsap.fromTo(heroSubtitle, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, delay: 1.5, ease: 'power3.out' });

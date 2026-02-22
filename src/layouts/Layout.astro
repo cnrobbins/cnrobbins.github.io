@@ -34,9 +34,10 @@ const { title, description = "Calder Robbins" } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
-    <!-- Custom cursor -->
+    <!-- Custom cursor (commented out; uncomment + initCustomCursor in app.js to restore)
     <div class="cursor" id="cursor"></div>
     <div class="cursor-follower" id="cursor-follower"></div>
+    -->
     
     <!-- Loading screen -->
     <div class="loading-screen" id="loading-screen">
@@ -50,7 +51,7 @@ const { title, description = "Calder Robbins" } = Astro.props;
       </div>
       <ul class="nav-links">
         <li><a href="/#hero" class="nav-link" data-text="Home">Home</a></li>
-        <li><a href="/#projects" class="nav-link" data-text="Projects">Projects</a></li>
+        <li><a href="/projects" class="nav-link" data-text="Projects">Projects</a></li>
         <li><a href="/#about" class="nav-link" data-text="About">About</a></li>
         <li><a href="/#contact" class="nav-link" data-text="Contact">Contact</a></li>
       </ul>
@@ -67,7 +68,7 @@ const { title, description = "Calder Robbins" } = Astro.props;
     <!-- Footer -->
     <footer class="footer">
       <div class="footer-content">
-        <p>&copy; 2025 Calder Robbins</p>
+        <p>&copy; 2026 Calder Robbins</p>
         <div class="footer-links">
           <a href="https://github.com/cnrobbins" target="_blank" rel="noopener">GitHub</a>
           <a href="https://www.linkedin.com/in/calder-robbins/" target="_blank" rel="noopener">LinkedIn</a>

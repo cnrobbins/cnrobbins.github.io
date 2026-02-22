@@ -552,6 +552,7 @@
 
 .project-page-container .section-title {
   font-size: var(--font-size-3xl);
+  color: var(--color-accent);
 }
 
 /* Project Summary Styles */
