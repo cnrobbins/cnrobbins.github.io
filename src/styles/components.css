@@ -175,11 +175,28 @@
   background: var(--color-bg-secondary);
 }
 
+/* Desktop: 2-column grid — text+bottom on left, photo on right spanning both rows */
 .about-content {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: var(--space-4xl);
+  grid-template-rows: auto auto;
+  gap: var(--space-4xl) var(--space-4xl);
   align-items: start;
+}
+
+.about-text {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.about-visual {
+  grid-column: 2;
+  grid-row: 1 / 3;
+}
+
+.about-bottom {
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .about-description {
@@ -334,7 +351,7 @@
 }
 
 .project-card:hover .project-overlay {
-  /* No change on hover needed anymore */
+  opacity: 0.05;
 }
 
 .project-title {
@@ -392,48 +409,6 @@
   margin-bottom: var(--space-2xl);
   line-height: var(--line-height-relaxed);
 }
-
-/* Animations */
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-    text-align: center;
-  }
-  
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-  }
-  
-  .about-skills {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: var(--font-size-5xl);
-  }
-  
-  .about-skills {
-    grid-template-columns: 1fr;
-  }
-  
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .section-title {
-    font-size: var(--font-size-3xl);
-  }
-  
-  .cta-title {
-    font-size: var(--font-size-3xl);
-  }
-} 
 
 /* Publication and Timeline Styles */
 .publications-section, .timeline-section {
@@ -639,4 +614,220 @@
 .project-section .project-page-container {
     padding-top: var(--space-4xl);
     padding-bottom: var(--space-4xl);
+}
+
+/* =============================================
+   RESPONSIVE DESIGN — must be at end of file
+   so media query rules win over base styles
+   at equal specificity
+   ============================================= */
+
+@media (max-width: 1024px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    text-align: center;
+  }
+
+  /* About: stack to single column; photo sits between description and skills via HTML order */
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .about-skills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Project summaries: stack image → title → description on narrow windows */
+  .project-summaries {
+    gap: var(--space-3xl);
+  }
+
+  .project-summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .project-summary-item:nth-child(even) .project-summary-image {
+    order: 0;
+  }
+
+  /* Default fallback for any unlisted images */
+  .project-summary-image img {
+    max-width: 85%;
+    margin: 0 auto;
+  }
+
+  /* Larger on mobile for all project images */
+  .project-summary-image img[src*="npoint-05.png"],
+  .project-summary-image img[src*="myoassist.png"],
+  .project-summary-image img[src*="ctrl_opt_v2.png"],
+  /* .project-summary-image img[src*="joint_moment.png"], */
+  .project-summary-image img[src*="actuator.png"],
+  .project-summary-image img[src*="myoassist_v2.png"] {
+    width: 85%;
+    max-width: 400px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .project-summary-description {
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Typography */
+  .hero-title {
+    font-size: var(--font-size-5xl);
+  }
+
+  .section-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .cta-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .page-title {
+    font-size: var(--font-size-4xl);
+  }
+
+  /* Hero gif: scale down from 3x */
+  .hero-visual {
+    height: auto;
+    max-height: 240px;
+    overflow: hidden;
+  }
+
+  .hero-visual img {
+    transform: scale(1.6);
+    max-height: 180px;
+    width: auto;
+  }
+
+  /* About section: center and cap profile photo width */
+  .about-visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .about-image {
+    max-width: 280px;
+  }
+
+  /* Skills: two columns on mobile */
+  .about-skills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Home project buttons: single column, smaller height */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card {
+    min-height: 160px;
+  }
+
+  .project-title {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Project summaries (768px reinforces the 1024px rules) */
+  .project-summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .project-summary-item:nth-child(even) .project-summary-image {
+    order: 0;
+  }
+
+  /* Larger on mobile for all project images */
+  .project-summary-image img,
+  .project-summary-image img[src*="npoint-05.png"],
+  .project-summary-image img[src*="myoassist.png"],
+  .project-summary-image img[src*="ctrl_opt_v2.png"],
+  /* .project-summary-image img[src*="joint_moment.png"], */
+  .project-summary-image img[src*="actuator.png"],
+  .project-summary-image img[src*="myoassist_v2.png"] {
+    width: 80%;
+    max-width: 360px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .project-summary-description {
+    text-align: left;
+  }
+
+  .project-summary-title {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Timeline: linearize to a clean left-aligned single column */
+  .timeline::after {
+    left: 10px;
+    transform: none;
+  }
+
+  .timeline-item {
+    width: 100%;
+    left: 0 !important;
+    padding-left: 36px;
+    padding-right: 0;
+    text-align: left;
+  }
+
+  .timeline-item:nth-child(odd) {
+    padding-right: 0;
+  }
+
+  .timeline-item::after {
+    left: 2px !important;
+    right: auto !important;
+    top: 50%;
+    transform: translateY(-50%) !important;
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .timeline-body {
+    flex-direction: row !important;
+    gap: var(--space-md);
+  }
+
+  .timeline-item:nth-child(odd) .timeline-body {
+    flex-direction: row !important;
+  }
+
+  .timeline-logo img,
+  .timeline-logo .asb-logo {
+    width: 110px;
+  }
+
+  .timeline-content h3 {
+    font-size: var(--font-size-base);
+  }
+
+  .timeline-content p {
+    font-size: var(--font-size-sm);
+  }
+
+  /* Publication links: wrap gracefully */
+  .publication-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .publication-links .btn {
+    margin-right: 0;
+  }
 } 

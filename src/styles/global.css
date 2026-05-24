@@ -118,6 +118,7 @@ ol {
   transition: all var(--duration-normal) var(--ease-out);
 }
 
+
 .nav-brand {
   display: flex;
   align-items: center;
@@ -319,11 +320,11 @@ ol {
   .nav-links {
     gap: var(--space-md);
   }
-  
+
   .nav-link {
     font-size: var(--font-size-sm);
   }
-  
+
   .footer-content {
     flex-direction: column;
     gap: var(--space-lg);
@@ -332,6 +333,8 @@ ol {
   
   .footer-links {
     gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
