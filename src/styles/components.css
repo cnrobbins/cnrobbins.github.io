@@ -578,6 +578,17 @@
   height: auto;
 }
 
+.project-summary-image--placeholder {
+  aspect-ratio: 16 / 10;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+}
+
 .project-summary-image img[src*="npoint-05.png"] {
   width: 65%;
   height: auto;
@@ -586,7 +597,21 @@
 }
 
 .project-summary-image img[src*="myoassist.png"] {
-  width: 70%;
+  width: 65%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.project-summary-image img[src*="ctrl_opt_v2.png"] {
+  width: 75%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.project-summary-image img[src*="joint_moment.png"] {
+  width: 60%;
   height: auto;
   display: block;
   margin: 0 auto;
