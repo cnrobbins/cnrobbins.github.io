@@ -49,14 +49,19 @@ const themeStyle = Object.entries(themeColors[projectTheme]).map(([key, value]) 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
+    <!-- Loading screen -->
+    <div class="loading-screen" id="loading-screen">
+      <img src="/assets/skeleton_walking_v2.gif" alt="Loading animation" />
+    </div>
+
     <nav class="nav" id="nav">
       <div class="nav-brand">
         <a href="/" class="nav-logo">CR</a>
       </div>
       <ul class="nav-links">
         <li><a href="/#hero" class="nav-link" data-text="Home">Home</a></li>
-        <li><a href="/projects" class="nav-link" data-text="Projects">Projects</a></li>
         <li><a href="/#about" class="nav-link" data-text="About">About</a></li>
+        <li><a href="/projects" class="nav-link" data-text="Projects">Projects</a></li>
         <li><a href="/#contact" class="nav-link" data-text="Contact">Contact</a></li>
       </ul>
     </nav>
@@ -67,7 +72,7 @@ const themeStyle = Object.entries(themeColors[projectTheme]).map(([key, value]) 
 
     <footer class="footer">
       <div class="footer-content">
-        <p>&copy; 2026 Calder Robbins</p>
+        <p>&copy; {new Date().getFullYear()} Calder Robbins</p>
         <div class="footer-links">
           <a href="https://github.com/cnrobbins" target="_blank" rel="noopener">GitHub</a>
           <a href="https://www.linkedin.com/in/calder-robbins/" target="_blank" rel="noopener">LinkedIn</a>
@@ -76,5 +81,10 @@ const themeStyle = Object.entries(themeColors[projectTheme]).map(([key, value]) 
         </div>
       </div>
     </footer>
+
+    <!-- Scripts -->
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="../scripts/app.js"></script>
   </body>
 </html> 

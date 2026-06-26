@@ -1,0 +1,32 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import { currentProjects } from '../../data/currentProjects.js';
+
+export function getStaticPaths() {
+  return currentProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<ProjectLayout title={`${project.title} - Calder Robbins`} description={project.blurb} projectTheme="red">
+  <div class="container project-page-container project-detail">
+    <a href="/projects#current-work" class="project-back-link">← Back to Current Work</a>
+
+    <h1 class="page-title">{project.title}</h1>
+
+    <div class="project-detail-image">
+      <img src={project.image} alt={project.title} />
+    </div>
+
+    <p class="project-summary-description">{project.description}</p>
+
+    <div class="project-detail-placeholder">
+      <h2>More coming soon!</h2>
+      <p>Detailed write-ups, figures, and results for this project are on the way. Check back soon.</p>
+    </div>
+  </div>
+</ProjectLayout>

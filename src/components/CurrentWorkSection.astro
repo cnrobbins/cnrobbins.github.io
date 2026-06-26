@@ -1,55 +1,24 @@
+---
+import { currentProjects } from '../data/currentProjects.js';
+---
+
 <div class="container project-page-container">
   <h1 class="page-title">Current Work</h1>
 
   <!-- Project Summaries Section -->
   <section class="project-summaries">
-    <!-- Project 1 -->
-    <div class="project-summary-item">
-      <div class="project-summary-image">
-        <img src="/assets/myoassist_v2.png" alt="MyoAssist Project">
+    {currentProjects.map((project) => (
+      <div class="project-summary-item">
+        <div class="project-summary-image">
+          <img src={project.image} alt={`${project.title} Project`} />
+        </div>
+        <div class="project-summary-content">
+          <a href={`/projects/${project.slug}`} class="project-summary-link">
+            <h3 class="project-summary-title">{project.title}</h3>
+          </a>
+          <p class="project-summary-description">{project.description}</p>
+        </div>
       </div>
-      <div class="project-summary-content">
-        <h3 class="project-summary-title">MyoAssist</h3>
-        <p class="project-summary-description">
-          I am the Project Lead and active developer of MyoAssist, which is an open-source simulation platform that accelerates the development of assistive technologies like prosthetics and exoskeletons by modeling human-device interactions. Built within the MyoSuite framework, it provides researchers with ready-to-use simulation environments combining detailed musculoskeletal models with assistive devices, along with machine learning tools for developing advanced control strategies.
-        </p>
-      </div>
-    </div>
-    <!-- Project 2 -->
-    <div class="project-summary-item">
-      <div class="project-summary-image">
-        <img src="/assets/ctrl_opt_v2.png" alt="Assistive Device Optimization">
-      </div>
-      <div class="project-summary-content">
-        <h3 class="project-summary-title">Assistive Device Optimization</h3>
-        <p class="project-summary-description">
-          I am working on developing a simulation-based approach to optimize wearable assistive devices through neuromechanical simulations in MyoAssist. Projects have included exoskeleton control optimization across various locomotion tasks and prosthetic ankle stiffness optimization.
-        </p>
-      </div>
-    </div>
-    <!-- Project 3 -->
-    <div class="project-summary-item">
-      <div class="project-summary-image">
-        <img src="/assets/actuator.png" alt="Actuator Design">
-      </div>
-      <div class="project-summary-content">
-        <h3 class="project-summary-title">Actuator Design</h3>
-        <p class="project-summary-description">
-          I am redesigning a compact nonlinear series elastic actuator for cable-driven exoskeletons and other systems. The actuator uses a CAM-based spring mechanism to maintain sensitive low-force cable tension while smoothly transitioning to high-force assistance with the goal of improving actuator packaging, wearability, and controllability.
-        </p>
-      </div>
-    </div>
-    <!-- Project 4 -->
-    <div class="project-summary-item">
-      <div class="project-summary-image">
-        <img src="/assets/joint_moment.png" alt="Joint Moment Estimation">
-      </div>
-      <div class="project-summary-content">
-        <h3 class="project-summary-title">Joint Moment Estimation</h3>
-        <p class="project-summary-description">
-          I am developing a task-agnostic ankle exoskeleton control framework that estimates biological ankle joint moment directly from onboard wearable sensors without real time ground reaction force data. The project uses a temporal convolutional neural network to map exoskeleton sensor data to ankle torque and stance/swing predictions, reducing the need for explicit gait-state classification or task-specific controller tuning.
-        </p>
-      </div>
-    </div>
+    ))}
   </section>
 </div>

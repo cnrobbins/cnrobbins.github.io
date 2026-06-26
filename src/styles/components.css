@@ -616,6 +616,240 @@
     padding-bottom: var(--space-4xl);
 }
 
+/* Hover-enlarge title links (Current Work) signal a clickable project page */
+.project-summary-link {
+  display: inline-block;
+  text-decoration: none;
+  transform-origin: left center;
+  transition: transform var(--duration-normal) var(--ease-back);
+}
+.project-summary-link:hover,
+.project-summary-link:focus-visible {
+  transform: scale(1.06);
+}
+
+/* =============================================
+   FEATURED WORK CAROUSEL (homepage)
+   ============================================= */
+.carousel {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.carousel-track {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: transform var(--duration-slow) var(--ease-in-out);
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  min-width: 100%;
+}
+
+.carousel-card {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: var(--color-bg-tertiary);
+  text-decoration: none;
+  color: #fff;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  padding: var(--space-xl);
+  box-sizing: border-box;
+  object-fit: contain;
+  background: var(--color-bg-tertiary);
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-xl);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+}
+
+.carousel-card:hover .carousel-caption,
+.carousel-card:focus-visible .carousel-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.carousel-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-xs);
+}
+
+.carousel-blurb {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-snug);
+  opacity: 0.92;
+  margin-bottom: var(--space-sm);
+}
+
+.carousel-cta {
+  font-size: var(--font-size-sm);
+  color: #fff;
+  font-weight: var(--font-weight-medium);
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--border-radius-full);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-3xl);
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  z-index: 2;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.carousel-arrow:hover {
+  background: #fff;
+}
+.carousel-arrow--prev { left: var(--space-md); }
+.carousel-arrow--next { right: var(--space-md); }
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.carousel-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0;
+  border: none;
+  border-radius: var(--border-radius-full);
+  background: var(--color-text-tertiary);
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+.carousel-dot.is-active {
+  opacity: 1;
+  background: var(--color-accent);
+}
+
+/* Touch devices have no hover: keep captions visible */
+@media (hover: none) {
+  .carousel-caption {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Smaller category links beneath the carousel */
+.projects-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+.projects-nav-link {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  padding: var(--space-md) var(--space-2xl);
+  border: var(--border-width-2) solid var(--color-text-tertiary);
+  border-radius: var(--border-radius-full);
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+.projects-nav-link:nth-child(1):hover {
+  color: var(--color-project-1);
+  border-color: var(--color-project-1);
+}
+.projects-nav-link:nth-child(2):hover {
+  color: var(--color-project-2);
+  border-color: var(--color-project-2);
+}
+.projects-nav-link:nth-child(3):hover {
+  color: var(--color-project-3);
+  border-color: var(--color-project-3);
+}
+
+/* =============================================
+   INDIVIDUAL PROJECT DETAIL PAGE
+   ============================================= */
+.project-detail {
+  max-width: 900px;
+}
+
+.project-back-link {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-lg);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.project-back-link:hover {
+  color: var(--color-accent);
+}
+
+.project-detail-image {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-xl);
+  text-align: center;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-lg);
+}
+.project-detail-image img {
+  max-width: 70%;
+  height: auto;
+}
+
+.project-detail-placeholder {
+  margin-top: var(--space-3xl);
+  padding: var(--space-3xl) var(--space-xl);
+  text-align: center;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-lg);
+}
+.project-detail-placeholder h2 {
+  color: var(--color-accent);
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-sm);
+}
+.project-detail-placeholder p {
+  color: var(--color-text-secondary);
+}
+
 /* =============================================
    RESPONSIVE DESIGN — must be at end of file
    so media query rules win over base styles
@@ -680,6 +914,26 @@
 }
 
 @media (max-width: 768px) {
+  /* Carousel: taller frame, hide arrows in favor of swipe + dots */
+  .carousel-card {
+    aspect-ratio: 4 / 3;
+  }
+  .carousel-arrow {
+    display: none;
+  }
+  .carousel-caption {
+    padding: var(--space-md);
+  }
+  .carousel-title {
+    font-size: var(--font-size-xl);
+  }
+  .carousel-blurb {
+    font-size: var(--font-size-sm);
+  }
+  .project-detail-image img {
+    max-width: 100%;
+  }
+
   /* Typography */
   .hero-title {
     font-size: var(--font-size-5xl);

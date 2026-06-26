@@ -1,0 +1,132 @@
+---
+import { currentProjects } from '../data/currentProjects.js';
+---
+
+<div class="carousel" data-carousel data-interval="5000" aria-roledescription="carousel" aria-label="Featured work">
+  <div class="carousel-viewport">
+    <ul class="carousel-track" data-carousel-track>
+      {currentProjects.map((project, i) => (
+        <li class="carousel-slide" data-carousel-slide aria-roledescription="slide" aria-label={`${i + 1} of ${currentProjects.length}`}>
+          <a href={`/projects/${project.slug}`} class="carousel-card">
+            <img class="carousel-img" src={project.image} alt={project.title} />
+            <div class="carousel-caption">
+              <h3 class="carousel-title">{project.title}</h3>
+              <p class="carousel-blurb">{project.blurb}</p>
+              <span class="carousel-cta">View project →</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <button class="carousel-arrow carousel-arrow--prev" data-carousel-prev aria-label="Previous slide">‹</button>
+  <button class="carousel-arrow carousel-arrow--next" data-carousel-next aria-label="Next slide">›</button>
+
+  <div class="carousel-dots" data-carousel-dots role="tablist" aria-label="Choose slide">
+    {currentProjects.map((project, i) => (
+      <button class="carousel-dot" data-carousel-dot data-index={i} role="tab" aria-label={`Go to ${project.title}`}></button>
+    ))}
+  </div>
+</div>
+
+<script>
+  class Carousel {
+    root: HTMLElement;
+    track: HTMLElement;
+    slides: HTMLElement[];
+    dots: HTMLElement[];
+    interval: number;
+    index: number;
+    timer: number | null;
+
+    constructor(root: HTMLElement) {
+      this.root = root;
+      this.track = root.querySelector('[data-carousel-track]') as HTMLElement;
+      this.slides = Array.from(root.querySelectorAll('[data-carousel-slide]')) as HTMLElement[];
+      this.dots = Array.from(root.querySelectorAll('[data-carousel-dot]')) as HTMLElement[];
+      this.interval = parseInt(root.dataset.interval || '5000', 10);
+      this.index = 0;
+      this.timer = null;
+
+      if (this.slides.length <= 1) {
+        root.querySelector('[data-carousel-prev]')?.remove();
+        root.querySelector('[data-carousel-next]')?.remove();
+        return;
+      }
+
+      root.querySelector('[data-carousel-prev]')?.addEventListener('click', () => this.go(this.index - 1, true));
+      root.querySelector('[data-carousel-next]')?.addEventListener('click', () => this.go(this.index + 1, true));
+      this.dots.forEach((dot, i) => dot.addEventListener('click', () => this.go(i, true)));
+
+      // Pause auto-advance on hover or keyboard focus.
+      root.addEventListener('mouseenter', () => this.stop());
+      root.addEventListener('mouseleave', () => this.start());
+      root.addEventListener('focusin', () => this.stop());
+      root.addEventListener('focusout', () => this.start());
+
+      // Pause when the tab is hidden.
+      document.addEventListener('visibilitychange', () => {
+        document.hidden ? this.stop() : this.start();
+      });
+
+      this.initSwipe();
+      this.update();
+      this.start();
+    }
+
+    go(i: number, fromUser = false) {
+      const count = this.slides.length;
+      this.index = (i + count) % count;
+      this.update();
+      if (fromUser) this.restart();
+    }
+
+    update() {
+      this.track.style.transform = `translateX(-${this.index * 100}%)`;
+      this.slides.forEach((slide, i) => slide.setAttribute('aria-hidden', String(i !== this.index)));
+      this.dots.forEach((dot, i) => {
+        const active = i === this.index;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-selected', String(active));
+      });
+    }
+
+    start() {
+      if (this.timer || this.slides.length <= 1) return;
+      // Respect users who prefer reduced motion: no auto-advance.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      this.timer = window.setInterval(() => this.go(this.index + 1), this.interval);
+    }
+
+    stop() {
+      if (this.timer) {
+        clearInterval(this.timer);
+        this.timer = null;
+      }
+    }
+
+    restart() {
+      this.stop();
+      this.start();
+    }
+
+    initSwipe() {
+      let startX = 0;
+      let dragging = false;
+      this.track.addEventListener('pointerdown', (e: PointerEvent) => {
+        dragging = true;
+        startX = e.clientX;
+      });
+      this.track.addEventListener('pointerup', (e: PointerEvent) => {
+        if (!dragging) return;
+        dragging = false;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 40) this.go(this.index + (dx < 0 ? 1 : -1), true);
+      });
+      this.track.addEventListener('pointercancel', () => { dragging = false; });
+    }
+  }
+
+  document.querySelectorAll('[data-carousel]').forEach((el) => new Carousel(el as HTMLElement));
+</script>

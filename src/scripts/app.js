@@ -84,7 +84,7 @@ class PortfolioApp {
   */
 
   startLoadingAnimation() {
-    setTimeout(() => this.finishLoading(), 1500); // Wait 1.5s
+    setTimeout(() => this.finishLoading(), 800); // Wait 0.8s
   }
 
   finishLoading(animate = true) {
@@ -137,16 +137,19 @@ class PortfolioApp {
     });
   }
 
-  /** Scroll to URL hash target (e.g. /projects#current-work). */
-  scrollToHash() {
-    const hash = window.location.hash;
-    if (!hash) return;
-    const id = hash.slice(1);
-    const el = document.getElementById(id);
+  /** Scroll to an element, accounting for the fixed nav height. */
+  scrollToElement(el, behavior = 'smooth') {
     if (!el) return;
     const navOffset = 100;
     const top = el.getBoundingClientRect().top + window.scrollY - navOffset;
-    window.scrollTo({ top, left: 0, behavior: 'auto' });
+    window.scrollTo({ top, left: 0, behavior });
+  }
+
+  /** Scroll to URL hash target on load (e.g. /projects#current-work). */
+  scrollToHash() {
+    const hash = window.location.hash;
+    if (!hash) return;
+    this.scrollToElement(document.getElementById(hash.slice(1)), 'auto');
   }
 
   animateHeroContent() {
@@ -217,16 +220,18 @@ class PortfolioApp {
   }
 
   setupEventListeners() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+    // Intercept links that point to a hash on the current page (e.g. /#about
+    // while already on the homepage) for smooth in-page scrolling. Links to
+    // other pages, mailto:, and external URLs fall through to default behavior.
+    document.querySelectorAll('a[href*="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const url = new URL(anchor.getAttribute('href'), window.location.href);
+        if (url.pathname !== window.location.pathname || !url.hash) return;
+        const el = document.getElementById(url.hash.slice(1));
+        if (!el) return;
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          window.scrollTo({
-            top: target.offsetTop,
-            behavior: 'smooth'
-          });
-        }
+        history.pushState(null, '', url.hash);
+        this.scrollToElement(el);
       });
     });
 
