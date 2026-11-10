@@ -4,18 +4,13 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://cnrobbins.github.io',
-  base: '/',
   integrations: [sitemap()],
   build: {
-    assets: 'assets'
+    assets: 'assets',
   },
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@import "src/styles/variables.scss";'
-        }
-      }
-    }
-  }
-}); 
+  // Old project URLs that were live on the site.
+  redirects: {
+    '/projects/actuator-design': '/projects/exoskeleton-hardware-design',
+    '/projects/assistive-device-optimization': '/projects',
+  },
+});

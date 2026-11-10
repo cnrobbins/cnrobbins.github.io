@@ -22,45 +22,26 @@
 
 .btn--primary:hover {
   background: var(--color-accent-hover);
-  transform: translateY(-2px);
+  transform: scale(1.05);
   box-shadow: var(--shadow-lg);
 }
 
+/* Grey outlined pill until hover, like the links under the carousel. */
 .btn--secondary {
-  background: var(--color-bg-secondary);
-  color: var(--color-text-primary);
-  border-color: var(--color-bg-tertiary);
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-color: var(--color-text-tertiary);
+  border-radius: var(--border-radius-full);
 }
 
 .btn--secondary:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  transform: translateY(-2px);
-}
-
-.btn--outline {
-  background: transparent;
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-
-.btn--outline:hover {
-  background: var(--color-accent);
-  color: white;
-  transform: translateY(-2px);
+  border-color: var(--color-highlight, var(--color-accent));
+  color: var(--color-highlight, var(--color-accent));
 }
 
 .btn--large {
   padding: var(--space-lg) var(--space-2xl);
   font-size: var(--font-size-lg);
-}
-
-.btn-arrow {
-  transition: transform var(--duration-normal) var(--ease-out);
-}
-
-.btn:hover .btn-arrow {
-  transform: translateX(4px);
 }
 
 /* Section Styles */
@@ -115,7 +96,7 @@
 }
 
 .hero-name {
-  color: var(--color-accent);
+  color: var(--color-highlight, var(--color-accent));
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--space-md);
@@ -140,12 +121,6 @@
   line-height: var(--line-height-relaxed);
 }
 
-.hero-cta {
-  display: flex;
-  gap: var(--space-lg);
-  align-items: center;
-}
-
 .hero-visual {
   display: flex;
   align-items: center;
@@ -158,21 +133,10 @@
   transform: scale(3.0);
 }
 
-.hero-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-/* "scroll to explore" styles removed */
-
 /* About Section */
 .about {
   padding: var(--space-5xl) 0;
-  background: var(--color-bg-secondary);
+  background: var(--color-section-bg);
 }
 
 /* Desktop: 2-column grid — text+bottom on left, photo on right spanning both rows */
@@ -192,6 +156,7 @@
 .about-visual {
   grid-column: 2;
   grid-row: 1 / 3;
+  min-width: 0; /* let the 1fr column, not the photo's 768 px, set the width */
 }
 
 .about-bottom {
@@ -221,7 +186,7 @@
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--space-md);
-  color: var(--color-accent);
+  color: var(--color-highlight, var(--color-accent));
 }
 
 .skill-category ul {
@@ -241,6 +206,10 @@
 
 .about-image {
   position: relative;
+  /* Up to the photo's 768 px source width, never wider than its column.
+     Explicit because a responsive image's natural width is not its file width. */
+  width: 768px;
+  max-width: 100%;
   border-radius: var(--border-radius-2xl);
   overflow: hidden;
   box-shadow: var(--shadow-xl);
@@ -272,114 +241,6 @@
   padding: var(--space-5xl) 0;
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-2xl);
-  margin-bottom: var(--space-3xl);
-}
-
-.project-card-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.project-card {
-  position: relative;
-  border-radius: var(--border-radius-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  transition: all var(--duration-normal) var(--ease-out);
-  color: white;
-  display: flex;
-  align-items: center;
-  min-height: 350px;
-}
-
-.project-card-link:nth-child(1) .project-card { background-color: var(--color-project-1); }
-.project-card-link:nth-child(2) .project-card { background-color: var(--color-project-2); }
-.project-card-link:nth-child(3) .project-card { background-color: var(--color-project-3); }
-
-.project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
-  transition: all var(--duration-normal) var(--ease-out);
-}
-
-.project-card:hover .project-img {
-  opacity: 0.1;
-}
-
-.project-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: var(--space-xl);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.project-image {
-  position: relative;
-  aspect-ratio: 16/10;
-  overflow: hidden;
-  object-fit: cover;
-  transition: transform var(--duration-slow) var(--ease-out);
-}
-
-.project-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--duration-slow) var(--ease-out);
-}
-
-.project-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: var(--space-lg);
-  opacity: 1;
-  background: transparent;
-}
-
-.project-card:hover .project-overlay {
-  opacity: 0.05;
-}
-
-.project-title {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--space-sm);
-  width: 100%;
-}
-
-.project-description {
-  margin-bottom: var(--space-md);
-  opacity: 0.9;
-}
-
-.project-tech {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-}
-
-.tech-tag {
-  padding: var(--space-xs) var(--space-sm);
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: var(--border-radius-md);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-}
-
 .projects-cta {
   text-align: center;
 }
@@ -403,12 +264,7 @@
   line-height: var(--line-height-tight);
 }
 
-.cta-description {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-2xl);
-  line-height: var(--line-height-relaxed);
-}
+
 
 /* Publication and Timeline Styles */
 .publications-section, .timeline-section {
@@ -428,6 +284,12 @@
   line-height: var(--line-height-relaxed);
 }
 
+/* The button row keeps the same gap whatever text sits above it (a citation,
+   a note, ...). It collapses with the citation's own bottom margin. */
+.publication-links {
+  margin-top: var(--space-md);
+}
+
 .publication-links .btn {
   margin-right: var(--space-md);
 }
@@ -443,7 +305,7 @@
   content: '';
   position: absolute;
   width: 3px;
-  background-color: var(--color-accent);
+  background-color: var(--color-highlight, var(--color-accent));
   top: 0;
   bottom: 0;
   left: 50%;
@@ -472,7 +334,7 @@
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: var(--color-highlight, var(--color-accent));
   border: 4px solid var(--color-bg-primary);
   top: 50%;
   transform: translateY(-50%);
@@ -511,6 +373,22 @@
   width: 150px;
 }
 
+/* Dark mode: older dark-on-transparent images (marked class="dark-panel") and
+   the conference logos sit on light panels until dark-ready versions replace
+   them. The panel is a zero-blur box-shadow drawn outside the image, so image
+   size and text layout match light mode exactly. Remove "dark-panel" from an
+   image once its asset works on both backgrounds. */
+:root[data-theme="dark"] img.dark-panel {
+  background: var(--color-legacy-panel);
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 0 0 var(--space-md) var(--color-legacy-panel);
+}
+
+:root[data-theme="dark"] .timeline-logo img {
+  background: var(--color-legacy-panel);
+  box-shadow: 0 0 0 var(--space-xs) var(--color-legacy-panel);
+}
+
 .timeline-content h3 {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
@@ -521,13 +399,13 @@
 .page-title {
   font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-accent);
+  color: var(--color-page-title, var(--color-accent));
   margin-bottom: var(--space-3xl);
 }
 
 .project-page-container .section-title {
   font-size: var(--font-size-3xl);
-  color: var(--color-accent);
+  color: var(--color-highlight, var(--color-accent));
 }
 
 /* Project Summary Styles */
@@ -548,52 +426,21 @@
   order: 2;
 }
 
-.project-summary-image img {
-  width: 100%;
+/* Every project image sits in the same invisible 4:3 frame and is scaled to
+   fit inside it (never stretched or cropped), so wide and tall images come
+   out at a similar size. The frame is transparent; smaller frames at the
+   breakpoints below. */
+.project-summary-image img,
+.project-summary-image video {
+  width: min(440px, 100%);
   height: auto;
-}
-
-.project-summary-image--placeholder {
-  aspect-ratio: 16 / 10;
-  background: var(--color-bg-tertiary);
-  border-radius: var(--border-radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-text-tertiary);
-  font-size: var(--font-size-sm);
-}
-
-.project-summary-image img[src*="npoint-05.png"] {
-  width: 65%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.project-summary-image img[src*="myoassist.png"] {
-  width: 65%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.project-summary-image img[src*="ctrl_opt_v2.png"] {
-  width: 75%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.project-summary-image img[src*="joint_moment.png"] {
-  width: 60%;
-  height: auto;
-  display: block;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
   margin: 0 auto;
 }
 
 .project-summary-title {
-  color: var(--color-accent);
+  color: var(--color-highlight, var(--color-accent));
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--space-md);
@@ -606,10 +453,10 @@
   text-align: justify;
 }
 
-/* Section-specific theme colors */
-.theme-yellow { --color-accent: #F5CD4D; }
-.theme-red { --color-accent: #EB3132; }
-.theme-blue { --color-accent: #515BE5; }
+/* Project sections: each tints --color-accent inside it (colors per palette). */
+.section-current { --color-accent: var(--color-section-current); }
+.section-papers { --color-accent: var(--color-section-papers); }
+.section-previous { --color-accent: var(--color-section-previous); }
 
 .project-section .project-page-container {
     padding-top: var(--space-4xl);
@@ -660,7 +507,7 @@
   position: relative;
   display: block;
   aspect-ratio: 16 / 9;
-  background: var(--color-bg-tertiary);
+  background: var(--color-figure-bg);
   text-decoration: none;
   color: #fff;
 }
@@ -671,7 +518,7 @@
   padding: var(--space-xl);
   box-sizing: border-box;
   object-fit: contain;
-  background: var(--color-bg-tertiary);
+  background: var(--color-figure-bg);
 }
 
 .carousel-caption {
@@ -703,13 +550,6 @@
   font-size: var(--font-size-base);
   line-height: var(--line-height-snug);
   opacity: 0.92;
-  margin-bottom: var(--space-sm);
-}
-
-.carousel-cta {
-  font-size: var(--font-size-sm);
-  color: #fff;
-  font-weight: var(--font-weight-medium);
 }
 
 .carousel-arrow {
@@ -723,8 +563,8 @@
   justify-content: center;
   border: none;
   border-radius: var(--border-radius-full);
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--color-text-primary);
+  background: var(--color-carousel-arrow-bg);
+  color: var(--color-carousel-arrow-fg);
   font-size: var(--font-size-3xl);
   line-height: 1;
   cursor: pointer;
@@ -733,7 +573,7 @@
   transition: background var(--duration-fast) var(--ease-out);
 }
 .carousel-arrow:hover {
-  background: #fff;
+  background: var(--color-carousel-arrow-hover);
 }
 .carousel-arrow--prev { left: var(--space-md); }
 .carousel-arrow--next { right: var(--space-md); }
@@ -759,7 +599,7 @@
 }
 .carousel-dot.is-active {
   opacity: 1;
-  background: var(--color-accent);
+  background: var(--color-highlight, var(--color-accent));
 }
 
 /* Touch devices have no hover: keep captions visible */
@@ -791,16 +631,16 @@
               border-color var(--duration-fast) var(--ease-out);
 }
 .projects-nav-link:nth-child(1):hover {
-  color: var(--color-project-1);
-  border-color: var(--color-project-1);
+  color: var(--color-highlight, var(--color-section-current));
+  border-color: var(--color-highlight, var(--color-section-current));
 }
 .projects-nav-link:nth-child(2):hover {
-  color: var(--color-project-2);
-  border-color: var(--color-project-2);
+  color: var(--color-highlight, var(--color-section-papers));
+  border-color: var(--color-highlight, var(--color-section-papers));
 }
 .projects-nav-link:nth-child(3):hover {
-  color: var(--color-project-3);
-  border-color: var(--color-project-3);
+  color: var(--color-highlight, var(--color-section-previous));
+  border-color: var(--color-highlight, var(--color-section-previous));
 }
 
 /* =============================================
@@ -819,14 +659,14 @@
   transition: color var(--duration-fast) var(--ease-out);
 }
 .project-back-link:hover {
-  color: var(--color-accent);
+  color: var(--color-link-hover);
 }
 
 .project-detail-image {
   margin-bottom: var(--space-xl);
   padding: var(--space-xl);
   text-align: center;
-  background: var(--color-bg-tertiary);
+  background: var(--color-figure-bg);
   border-radius: var(--border-radius-lg);
 }
 .project-detail-image img {
@@ -842,12 +682,75 @@
   border-radius: var(--border-radius-lg);
 }
 .project-detail-placeholder h2 {
-  color: var(--color-accent);
+  color: var(--color-highlight, var(--color-accent));
   font-size: var(--font-size-2xl);
   margin-bottom: var(--space-sm);
 }
 .project-detail-placeholder p {
   color: var(--color-text-secondary);
+}
+
+/* =============================================
+   FULL PROJECT PAGE (content in src/data/projects/)
+   Rows reuse the /projects list (.project-summary-*), so the write-up
+   matches the rest of the site.
+   ============================================= */
+.project-role {
+  margin-top: calc(-1 * var(--space-2xl));
+  margin-bottom: var(--space-2xl);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+}
+
+.project-banner {
+  margin-bottom: var(--space-2xl);
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Wide, short crop of the banner image; --banner-position picks the crop. */
+.project-banner-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 1;
+  object-fit: cover;
+  object-position: var(--banner-position, center);
+}
+
+.project-intro p {
+  margin-bottom: var(--space-lg);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  text-align: justify;
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-4xl);
+}
+
+.project-page-section {
+  margin-bottom: var(--space-4xl);
+}
+
+.project-page-section > .section-title {
+  margin-bottom: var(--space-3xl);
+}
+
+.project-summary-content .project-summary-description + .project-summary-description {
+  margin-top: var(--space-md);
+}
+
+.project-closing {
+  margin-top: var(--space-3xl);
+}
+
+.project-video {
+  border-radius: var(--border-radius-lg);
 }
 
 /* =============================================
@@ -857,6 +760,12 @@
    ============================================= */
 
 @media (max-width: 1024px) {
+  /* Project page intro: left-aligned like the row text below it (justified
+     text leaves wide word gaps in a narrow column). */
+  .project-intro p {
+    text-align: left;
+  }
+
   .hero-content {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
@@ -889,23 +798,15 @@
     order: 0;
   }
 
-  /* Default fallback for any unlisted images */
-  .project-summary-image img {
-    max-width: 85%;
-    margin: 0 auto;
+  /* Full-width image column (the item's align-items: center would otherwise
+     shrink it to the image's natural width). */
+  .project-summary-image {
+    width: 100%;
   }
 
-  /* Larger on mobile for all project images */
-  .project-summary-image img[src*="npoint-05.png"],
-  .project-summary-image img[src*="myoassist.png"],
-  .project-summary-image img[src*="ctrl_opt_v2.png"],
-  /* .project-summary-image img[src*="joint_moment.png"], */
-  .project-summary-image img[src*="actuator.png"],
-  .project-summary-image img[src*="myoassist_v2.png"] {
-    width: 85%;
-    max-width: 400px;
-    display: block;
-    margin: 0 auto;
+  .project-summary-image img,
+  .project-summary-image video {
+    width: min(320px, 100%);
   }
 
   .project-summary-description {
@@ -914,6 +815,11 @@
 }
 
 @media (max-width: 768px) {
+  /* Project page banner: a taller crop so it is not a thin strip on phones. */
+  .project-banner-img {
+    aspect-ratio: 2 / 1;
+  }
+
   /* Carousel: taller frame, hide arrows in favor of swipe + dots */
   .carousel-card {
     aspect-ratio: 4 / 3;
@@ -979,19 +885,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Home project buttons: single column, smaller height */
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .project-card {
-    min-height: 160px;
-  }
-
-  .project-title {
-    font-size: var(--font-size-xl);
-  }
-
   /* Project summaries (768px reinforces the 1024px rules) */
   .project-summary-item {
     display: flex;
@@ -1003,18 +896,9 @@
     order: 0;
   }
 
-  /* Larger on mobile for all project images */
   .project-summary-image img,
-  .project-summary-image img[src*="npoint-05.png"],
-  .project-summary-image img[src*="myoassist.png"],
-  .project-summary-image img[src*="ctrl_opt_v2.png"],
-  /* .project-summary-image img[src*="joint_moment.png"], */
-  .project-summary-image img[src*="actuator.png"],
-  .project-summary-image img[src*="myoassist_v2.png"] {
-    width: 80%;
-    max-width: 360px;
-    display: block;
-    margin: 0 auto;
+  .project-summary-image video {
+    width: min(320px, 56vw);
   }
 
   .project-summary-description {

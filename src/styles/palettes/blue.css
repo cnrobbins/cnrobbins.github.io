@@ -1,0 +1,92 @@
+/* Blue palette: one brand blue across the whole site, with a dark mode.
+   Selected in src/theme.config.ts.
+
+   :where() keeps specificity at zero, so the .section-* classes can override
+   --color-accent inside a section. */
+:where(:root[data-palette="blue"]) {
+  color-scheme: light;
+
+  --color-bg-primary: #fafafa;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #f4f4f5;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+
+  --color-accent: #325fbf;
+  --color-accent-hover: #1e3973;
+
+  /* Project sections share the brand blue (set separately to tell them apart). */
+  --color-section-current: #325fbf;
+  --color-section-papers: #325fbf;
+  --color-section-previous: #325fbf;
+
+  /* Panel behind figures (carousel, project page image). */
+  --color-figure-bg: var(--color-bg-tertiary);
+
+  /* Page section backgrounds (About, footer) and the hero/contact gradient. */
+  --color-section-bg: var(--color-bg-secondary);
+  --gradient-bg: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-tertiary) 100%);
+
+  /* Nav bar: translucent tint and bottom border over the page. */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+
+  /* Carousel ‹ › buttons. */
+  --color-carousel-arrow-bg: rgba(255, 255, 255, 0.85);
+  --color-carousel-arrow-fg: #1a1a1a;
+  --color-carousel-arrow-hover: #ffffff;
+
+  /* Text links (footer, "Back to ...") on hover. */
+  --color-link-hover: var(--color-accent);
+
+  /* Faint offset shadow behind section titles. */
+  --gradient-text: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+}
+
+/* Dark mode. data-theme is set on <html> before first paint (see Layout.astro). */
+:where(:root[data-palette="blue"][data-theme="dark"]) {
+  color-scheme: dark;
+
+  --color-bg-primary: #13254a;
+  --color-bg-secondary: #172b55;
+  --color-bg-tertiary: #1e3666;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #c8d1e3;
+  --color-text-tertiary: #8d9cbc;
+
+  --color-accent: #325fbf;
+  --color-accent-hover: #4b78d6;
+
+  /* Blue text, borders and lines (not button fills): #325fbf lightened to
+     3.0:1 contrast on the #13254a page background. */
+  --color-highlight: #3e6bcc;
+
+  /* One continuous background while scrolling: no section bands or gradients. */
+  --color-section-bg: var(--color-bg-primary);
+  --gradient-bg: var(--color-bg-primary);
+
+  /* Nav bar: tinted with the page navy (same 10% / 20% as light mode's white),
+     so it matches the page until content scrolls under it. */
+  --glass-bg: rgba(19, 37, 74, 0.1);
+  --glass-border: rgba(19, 37, 74, 0.2);
+
+  /* Blue link text on navy is hard to read, so links hover to white. */
+  --color-link-hover: #ffffff;
+
+  /* Main page titles (Current Work, Papers & Presentations, Previous Work,
+     project names) are white; subheaders stay blue. Unset in light mode, so
+     titles there follow their section's accent. */
+  --color-page-title: #ffffff;
+
+  /* Frame behind figures (carousel, project page image): a navy card. */
+  --color-figure-bg: var(--color-bg-tertiary);
+
+  /* Light panel for older dark-on-transparent images (img.dark-panel) and logos. */
+  --color-legacy-panel: #eef1f6;
+
+  /* Carousel ‹ › buttons: navy disc, white glyph. */
+  --color-carousel-arrow-bg: rgba(19, 37, 74, 0.85);
+  --color-carousel-arrow-fg: #ffffff;
+  --color-carousel-arrow-hover: #13254a;
+}

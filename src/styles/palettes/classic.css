@@ -1,0 +1,46 @@
+/* Classic palette: the site's original colors (green accent; red, blue and
+   yellow project sections). Light mode only.
+   To bring it back, set ACTIVE_PALETTE = 'classic' in src/theme.config.ts.
+
+   :where() keeps specificity at zero, so the .section-* classes can override
+   --color-accent inside a section. */
+:where(:root[data-palette="classic"]) {
+  color-scheme: light;
+
+  --color-bg-primary: #fafafa;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #f4f4f5;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+
+  --color-accent: #268F57;
+  --color-accent-hover: #1e6a43;
+
+  /* Project sections: Current Work, Papers & Presentations, Previous Work. */
+  --color-section-current: #EB3132;
+  --color-section-papers: #515BE5;
+  --color-section-previous: #F5CD4D;
+
+  /* Panel behind figures (carousel, project page image). */
+  --color-figure-bg: var(--color-bg-tertiary);
+
+  /* Page section backgrounds (About, footer) and the hero/contact gradient. */
+  --color-section-bg: var(--color-bg-secondary);
+  --gradient-bg: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-tertiary) 100%);
+
+  /* Nav bar: translucent tint and bottom border over the page. */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+
+  /* Carousel ‹ › buttons. */
+  --color-carousel-arrow-bg: rgba(255, 255, 255, 0.85);
+  --color-carousel-arrow-fg: #1a1a1a;
+  --color-carousel-arrow-hover: #ffffff;
+
+  /* Text links (footer, "Back to ...") on hover. */
+  --color-link-hover: var(--color-accent);
+
+  /* Faint offset shadow behind section titles. */
+  --gradient-text: linear-gradient(135deg, var(--color-accent) 0%, #a855f7 100%);
+}

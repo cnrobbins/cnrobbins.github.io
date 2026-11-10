@@ -1,0 +1,96 @@
+---
+// Full write-up for a project that has `page` data (see src/data/projects/).
+// Layout: title + role, wide banner, intro, links, then sections of
+// alternating image/text rows (same rows as the /projects list) and an optional
+// closing paragraph per section.
+import Img from './Img.astro';
+import type { Project, ProjectPageData } from '../data/projects/types';
+
+interface Props {
+  project: Project & { page: ProjectPageData };
+}
+
+const { project } = Astro.props;
+const page = project.page;
+const rowImageSizes = '(max-width: 768px) 56vw, (max-width: 1024px) 320px, 440px';
+---
+
+<div class="container project-page-container project-page">
+  <a href="/projects#current-work" class="project-back-link">Back to Current Work</a>
+
+  <h1 class="page-title">{project.title}</h1>
+  {page.role && <p class="project-role">{page.role}</p>}
+
+  <div class="project-banner" style={`--banner-position: ${page.banner.position ?? 'center'}`}>
+    <Img
+      src={page.banner.image}
+      alt={page.banner.alt}
+      class="project-banner-img"
+      sizes="(max-width: 1200px) 100vw, 1152px"
+      loading="eager"
+    />
+  </div>
+
+  <div class="project-intro">
+    {page.intro.map((text) => <p>{text}</p>)}
+  </div>
+
+  {page.links && page.links.length > 0 && (
+    <div class="project-links">
+      {page.links.map((link) => (
+        <a href={link.href} class="btn btn--secondary" target="_blank" rel="noopener noreferrer">{link.label}</a>
+      ))}
+    </div>
+  )}
+
+  {page.sections.map((section) => (
+    <section class="project-page-section">
+      <h2 class="section-title" data-text={section.title}>{section.title}</h2>
+
+      <div class="project-summaries">
+        {section.features.map((feature) => (
+          <div class="project-summary-item">
+            <div class="project-summary-image">
+              {feature.media.type === 'video' ? (
+                // Plays only while on screen (see initVideos in app.js); never autoplays
+                // for visitors who prefer reduced motion.
+                <video
+                  class="project-video"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  poster={feature.media.poster}
+                  width={feature.media.width}
+                  height={feature.media.height}
+                  aria-label={feature.media.alt}
+                  data-lazy-autoplay
+                >
+                  {feature.media.sources.map((source) => <source src={source.src} type={source.type} />)}
+                </video>
+              ) : (
+                <Img
+                  src={feature.media.image}
+                  alt={feature.media.alt}
+                  class={feature.media.darkPanel ? 'dark-panel' : undefined}
+                  sizes={rowImageSizes}
+                />
+              )}
+            </div>
+            <div class="project-summary-content">
+              <h3 class="project-summary-title">{feature.heading}</h3>
+              {feature.body.map((text) => <p class="project-summary-description">{text}</p>)}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {section.closing && (
+        <div class="project-closing">
+          {section.closing.heading && <h3 class="project-summary-title">{section.closing.heading}</h3>}
+          {section.closing.body.map((text) => <p class="project-summary-description">{text}</p>)}
+        </div>
+      )}
+    </section>
+  ))}
+</div>

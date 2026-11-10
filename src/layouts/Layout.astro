@@ -1,71 +1,110 @@
 ---
 import '../styles/variables.css';
+import '../styles/palettes/blue.css';
+import '../styles/palettes/classic.css';
 import '../styles/global.css';
 import '../styles/components.css';
+import '../styles/page-themes/myoassist.css';
+import { ACTIVE_PALETTE, PAGE_THEMES, PALETTES, type PageThemeName, type Section } from '../theme.config';
 
 export interface Props {
   title: string;
   description?: string;
+  /** Project section a page belongs to; tints its accent (see .section-*). */
+  section?: Section;
+  /** Page-specific look (see PAGE_THEMES in theme.config.ts). */
+  pageTheme?: PageThemeName;
 }
 
-const { title, description = "Calder Robbins" } = Astro.props;
+const { title, description = 'Calder Robbins', section, pageTheme } = Astro.props;
+
+const palette = PALETTES[ACTIVE_PALETTE];
+const paletteDark = 'themeColorDark' in palette ? palette.themeColorDark : undefined;
+const hasDarkMode = Boolean(paletteDark);
+const themeColor = pageTheme
+  ? PAGE_THEMES[pageTheme].themeColor
+  : section ? palette.sectionColors[section] : palette.themeColor;
+const themeColorDark = pageTheme && hasDarkMode ? PAGE_THEMES[pageTheme].themeColorDark : paletteDark;
+const htmlClass = [section && `section-${section}`, pageTheme && `theme-${pageTheme}`].filter(Boolean).join(' ') || undefined;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  data-palette={ACTIVE_PALETTE}
+  data-dark-mode={hasDarkMode ? '' : undefined}
+  class={htmlClass}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    
-    <!-- Preconnect to external fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    
+
     <title>{title}</title>
-    
-    <!-- Theme and color scheme -->
-    <meta name="theme-color" content="#6366f1" />
-    <meta name="color-scheme" content="dark light" />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta name="theme-color" content={themeColor} data-light={themeColor} data-dark={themeColorDark} />
+    <meta name="color-scheme" content={hasDarkMode ? 'light dark' : 'light'} />
+
+    <!-- Runs before first paint so the page never flashes the wrong theme:
+         a saved choice wins, otherwise follow the system setting. -->
+    <script is:inline>
+      (() => {
+        if (!document.documentElement.hasAttribute('data-dark-mode')) return;
+        let theme = null;
+        try { theme = localStorage.getItem('theme'); } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta && meta.dataset[theme]) meta.content = meta.dataset[theme];
+      })();
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href={palette.favicon} />
   </head>
   <body>
-    <!-- Custom cursor (commented out; uncomment + initCustomCursor in app.js to restore)
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-follower" id="cursor-follower"></div>
-    -->
-    
-    <!-- Loading screen -->
+    <!-- Loading screen (shown once per browser session; see app.js) -->
     <div class="loading-screen" id="loading-screen">
-      <img src="/assets/skeleton_walking_v2.gif" alt="Loading animation" />
+      <img src="/assets/skeleton_walking_v2.gif" alt="" />
     </div>
 
-    <!-- Navigation -->
     <nav class="nav" id="nav">
       <div class="nav-brand">
         <a href="/" class="nav-logo">CR</a>
       </div>
       <ul class="nav-links">
-        <li><a href="/#hero" class="nav-link" data-text="Home">Home</a></li>
-        <li><a href="/#about" class="nav-link" data-text="About">About</a></li>
-        <li><a href="/projects" class="nav-link" data-text="Projects">Projects</a></li>
-        <li><a href="/#contact" class="nav-link" data-text="Contact">Contact</a></li>
+        <li><a href="/#hero" class="nav-link">Home</a></li>
+        <li><a href="/#about" class="nav-link">About</a></li>
+        <li><a href="/projects" class="nav-link">Projects</a></li>
+        <li><a href="/#contact" class="nav-link">Contact</a></li>
       </ul>
-      <div class="nav-theme">
-        <!-- Theme toggle removed -->
-      </div>
+      {/* Dark-mode toggle (its visible word is the mode it switches to). Palettes
+          without dark mode get an empty column that balances .nav-brand so the
+          links sit centered. */}
+      {hasDarkMode ? (
+        <div class="nav-actions">
+          <button type="button" class="theme-toggle" data-theme-toggle>
+            <span class="sr-only">Switch to</span>
+            <span class="theme-toggle-dark">Dark</span>
+            <span class="theme-toggle-light">Light</span>
+            <span class="sr-only">mode</span>
+          </button>
+        </div>
+      ) : (
+        <div class="nav-spacer" aria-hidden="true"></div>
+      )}
     </nav>
 
-    <!-- Main content -->
     <main class="main">
       <slot />
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
       <div class="footer-content">
         <p>&copy; {new Date().getFullYear()} Calder Robbins</p>
@@ -78,9 +117,8 @@ const { title, description = "Calder Robbins" } = Astro.props;
       </div>
     </footer>
 
-    <!-- Scripts -->
     <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="../scripts/app.js"></script>
   </body>
-</html> 
+</html>

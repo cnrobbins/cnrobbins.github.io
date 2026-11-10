@@ -1,0 +1,46 @@
+/* MyoAssist project page: matches the MyoAssist website (myoassist.neumove.org),
+   which uses the just-the-docs theme with MyoAssist teal. Values are taken from
+   that site's compiled light and myoassist_dark stylesheets.
+
+   Applied by `theme: 'myoassist'` in the project's page data (html class
+   .theme-myoassist). The class outranks the palette's :where() rules and the
+   .section-* classes, so these values win on this page only. Tokens that the
+   palette defines in terms of others (section backgrounds, gradients) follow
+   these base colors automatically. */
+:root.theme-myoassist {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f6fa;
+  --color-bg-tertiary: #eeebee;
+  --color-text-primary: #27262b;
+  --color-text-secondary: #5c5962;
+  --color-text-tertiary: #959396;
+
+  --color-accent: #155257;
+  --color-accent-hover: #0f3f42;
+  --color-section-current: #155257;
+  --color-section-papers: #155257;
+  --color-section-previous: #155257;
+
+  --color-link-hover: var(--color-accent);
+}
+
+:root.theme-myoassist[data-theme="dark"] {
+  --color-bg-primary: #27262b;
+  --color-bg-secondary: #302d36;
+  --color-bg-tertiary: #44434d;
+  --color-text-primary: #f5f6fa;
+  --color-text-secondary: #e6e1e8;
+  --color-text-tertiary: #959396;
+
+  /* Brand teal stays on fills (white text); the lightened teal the MyoAssist
+     site uses on dark is the highlight for text, borders and lines. */
+  --color-accent: #155257;
+  --color-accent-hover: #1d6b71;
+  --color-highlight: #4fb6c0;
+  --color-link-hover: #75c6cd; /* lighten(#4fb6c0, 10%), as on the MyoAssist site */
+  --color-page-title: var(--color-text-primary);
+
+  --color-legacy-panel: #f5f6fa;
+  --glass-bg: rgba(39, 38, 43, 0.1);
+  --glass-border: rgba(39, 38, 43, 0.2);
+}

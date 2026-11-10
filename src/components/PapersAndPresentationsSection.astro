@@ -1,8 +1,21 @@
+---
+import Img from './Img.astro';
+import asbLogo from '../assets/images/ASB-Logo-Horizontal-with-date.png';
+import rehabweekLogo from '../assets/images/rehabweek25_logo.png';
+---
+
 <div class="container project-page-container">
   <h1 class="page-title">Papers & Presentations</h1>
   <!-- Journal Papers Section -->
   <section class="publications-section">
     <h2 class="section-title">Journal Papers</h2>
+    <div class="publication-item">
+      <p class="publication-reference"><strong>Robbins, C.*</strong>, Son, H.*, Tan, C. K., Wang, C., van Kanten, R., Sartori, M., Durandau, G., Kumar, V., Caggiano, V., & Song, S. (2026). MyoAssist 1.0: An Open-Source Framework for Neuromechanical Simulation of Physical Human-Device Interaction. <em>bioRxiv</em>. doi:10.64898/2026.08.25.746839</p>
+      <p class="presentation-note"><em>* Co-first authors</em></p>
+      <div class="publication-links">
+        <a href="https://www.biorxiv.org/content/10.64898/2026.08.25.746839v1" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">View Paper</a>
+      </div>
+    </div>
     <div class="publication-item">
       <p class="publication-reference">Price, M., <strong>Robbins, C.</strong>, Szemethy, S., Abdikadirova, B., Olson, G., Hoogkamer, W., & Huber, M. E. (2025). Adjustable Compliance Footwear Technology to Investigate Gait Adaptation. <em>IEEE Robotics and Automation Letters</em>, vol. 10, no. 12, pp. 13352–13358. doi:10.1109/LRA.2025.3629969</p>
       <div class="publication-links">
@@ -11,19 +24,14 @@
     </div>
   </section>
 
-  <!-- Conference Papers Section -->
+  {/* Conference Papers: hidden until there is a conference paper to list.
+     (The ICORR 2025 MyoAssist paper is listed under Presentations.)
   <section class="publications-section">
     <h2 class="section-title">Conference Papers</h2>
-    <div class="publication-item">
-      <p class="publication-reference">Tan, C. K., Wang, C., Lyu, S., Hodossy, B. K., Schumacher, P., Wilson, E. B., Caggiano, V., Kumar, V., Farina, D., Gionfrida, L., Rouse, E. J., Durandau, G., & Song, S. (2025). Myoassist 0.1: Myosuite for Dexterity and Agility in Bionic Humans. In <em>2025 International Conference On Rehabilitation Robotics (ICORR)</em> (pp. 437-442). IEEE. doi:10.1109/ICORR66766.2025.11063089</p>
-      <p class="presentation-note"><em><strong>NOTE:</strong> Presented on behalf of Chun Kwang Tan @ ICORR 2025</em></p>
-      <div class="publication-links">
-        <a href="https://ieeexplore.ieee.org/document/11063089" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">View Paper</a>
-      </div>
-    </div>
   </section>
+  */}
 
-  <!-- Abstracts Section -->
+  {/* Conference Abstracts: kept for reference, not shown on the site.
   <section class="publications-section">
     <h2 class="section-title">Conference Abstracts</h2>
     <div class="publication-item">
@@ -42,6 +50,7 @@
       </div>
     </div>
   </section>
+  */}
 
   <!-- Presentation Timeline Section -->
   <section class="timeline-section">
@@ -53,11 +62,19 @@
       <p class="presentation-details"><em>August 13th, 2025, Pittsburgh, PA </em></p>
     </div>
 
+    <div class="publication-item">
+      <p class="publication-reference">Tan, C. K., Wang, C., Lyu, S., Hodossy, B. K., Schumacher, P., Wilson, E. B., Caggiano, V., Kumar, V., Farina, D., Gionfrida, L., Rouse, E. J., Durandau, G., & Song, S. (2025). Myoassist 0.1: Myosuite for Dexterity and Agility in Bionic Humans. In <em>2025 International Conference On Rehabilitation Robotics (ICORR)</em> (pp. 437-442). IEEE. doi:10.1109/ICORR66766.2025.11063089</p>
+      <p class="presentation-note"><em><strong>NOTE:</strong> Presented on behalf of Chun Kwang Tan @ ICORR 2025</em></p>
+      <div class="publication-links">
+        <a href="https://ieeexplore.ieee.org/document/11063089" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">View Paper</a>
+      </div>
+    </div>
+
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-body">
           <div class="timeline-logo">
-            <img src="/assets/ASB-Logo-Horizontal-with-date.png" alt="American Society of Biomechanics Logo" class="asb-logo" />
+            <Img src={asbLogo} alt="American Society of Biomechanics Logo" class="asb-logo" sizes="150px" />
           </div>
           <div class="timeline-content">
             <h3>American Society of Biomechanics</h3>
@@ -68,7 +85,7 @@
       <div class="timeline-item">
         <div class="timeline-body">
           <div class="timeline-logo">
-            <img src="/assets/rehabweek25_logo.png" alt="RehabWeek Logo" />
+            <Img src={rehabweekLogo} alt="RehabWeek Logo" sizes="120px" />
           </div>
           <div class="timeline-content">
             <h3>Rehabweek - ICORR</h3>
@@ -79,7 +96,7 @@
       <div class="timeline-item">
         <div class="timeline-body">
           <div class="timeline-logo">
-            <img src="/assets/ASB-Logo-Horizontal-with-date.png" alt="American Society of Biomechanics Logo" class="asb-logo" />
+            <Img src={asbLogo} alt="American Society of Biomechanics Logo" class="asb-logo" sizes="150px" />
           </div>
           <div class="timeline-content">
             <h3>American Society of Biomechanics</h3>

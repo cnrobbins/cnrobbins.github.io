@@ -1,3 +1,9 @@
+---
+import Img from './Img.astro';
+import roboshoes from '../assets/images/roboshoes.png';
+import treadmill from '../assets/images/treadmill.png';
+---
+
 <div class="container project-page-container">
   <h1 class="page-title">Previous Work</h1>
 
@@ -6,7 +12,7 @@
     <!-- Project 1 -->
     <div class="project-summary-item">
       <div class="project-summary-image">
-        <img src="/assets/roboshoes.png" alt="Wearable Robotic Shoes Project">
+        <Img src={roboshoes} alt="Wearable Robotic Shoes Project" class="dark-panel" sizes="(max-width: 768px) 80vw, (max-width: 1024px) 85vw, 552px" />
       </div>
       <div class="project-summary-content">
         <h3 class="project-summary-title">Wearable Robotic Shoes</h3>
@@ -18,7 +24,7 @@
     <!-- Project 2 -->
     <div class="project-summary-item">
       <div class="project-summary-image">
-        <img src="/assets/treadmill.png" alt="Steep Incline Treadmill Project">
+        <Img src={treadmill} alt="Steep Incline Treadmill Project" class="dark-panel" sizes="(max-width: 768px) 80vw, (max-width: 1024px) 85vw, 552px" />
       </div>
       <div class="project-summary-content">
         <h3 class="project-summary-title">Steep Slopes and Footwear Bending Stiffness</h3>

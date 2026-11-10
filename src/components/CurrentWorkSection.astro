@@ -1,5 +1,6 @@
 ---
 import { currentProjects } from '../data/currentProjects.js';
+import Img from './Img.astro';
 ---
 
 <div class="container project-page-container">
@@ -10,7 +11,7 @@ import { currentProjects } from '../data/currentProjects.js';
     {currentProjects.map((project) => (
       <div class="project-summary-item">
         <div class="project-summary-image">
-          <img src={project.image} alt={`${project.title} Project`} />
+          <Img src={project.image} alt={`${project.title} Project`} sizes="(max-width: 768px) 80vw, (max-width: 1024px) 85vw, 552px" />
         </div>
         <div class="project-summary-content">
           <a href={`/projects/${project.slug}`} class="project-summary-link">

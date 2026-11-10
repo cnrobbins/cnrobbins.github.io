@@ -1,0 +1,59 @@
+---
+// Responsive image for every photo and figure on the site.
+//
+// Raster files (PNG/JPG) in src/assets/images/ stay full resolution in the
+// repo. The build writes WebP copies at several widths (up to MAX_WIDTH, never
+// upscaled) and the browser downloads the smallest one that is still sharp
+// for the screen. MAX_WIDTH is about 3x the widest on-screen image (the
+// 720 px carousel), so even 3x phone displays get full detail.
+//
+// SVG files are vector, so they are served as-is (sharp at any size).
+// Text inside an SVG shown this way cannot load web fonts: convert text to
+// outlines, or give it a common fallback font.
+//
+// (Astro also copies each raster original into dist/assets; pages never link
+// to it, so visitors only download the WebP sizes.)
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  /** Rendered width hint for the browser, e.g. "(max-width: 768px) 100vw, 720px". */
+  sizes: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const MAX_WIDTH = 2400;
+const STEPS = [480, 960, 1440, 1920];
+
+const { src, alt, sizes, class: className, loading = 'lazy' } = Astro.props;
+const isSvg = src.format === 'svg';
+const width = Math.min(src.width, MAX_WIDTH);
+const widths = [...STEPS.filter((w) => w < width), width];
+---
+
+{isSvg ? (
+  <img
+    src={src.src}
+    alt={alt}
+    width={src.width}
+    height={src.height}
+    loading={loading}
+    decoding="async"
+    class={className}
+  />
+) : (
+  <Image
+    src={src}
+    alt={alt}
+    width={width}
+    widths={widths}
+    sizes={sizes}
+    format="webp"
+    quality={90}
+    loading={loading}
+    class={className}
+  />
+)}

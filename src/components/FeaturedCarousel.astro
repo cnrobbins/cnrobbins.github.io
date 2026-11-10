@@ -1,5 +1,6 @@
 ---
 import { currentProjects } from '../data/currentProjects.js';
+import Img from './Img.astro';
 ---
 
 <div class="carousel" data-carousel data-interval="5000" aria-roledescription="carousel" aria-label="Featured work">
@@ -8,11 +9,10 @@ import { currentProjects } from '../data/currentProjects.js';
       {currentProjects.map((project, i) => (
         <li class="carousel-slide" data-carousel-slide aria-roledescription="slide" aria-label={`${i + 1} of ${currentProjects.length}`}>
           <a href={`/projects/${project.slug}`} class="carousel-card">
-            <img class="carousel-img" src={project.image} alt={project.title} />
+            <Img class="carousel-img" src={project.image} alt={project.title} sizes="(max-width: 768px) 100vw, 720px" loading="eager" />
             <div class="carousel-caption">
               <h3 class="carousel-title">{project.title}</h3>
               <p class="carousel-blurb">{project.blurb}</p>
-              <span class="carousel-cta">View project →</span>
             </div>
           </a>
         </li>

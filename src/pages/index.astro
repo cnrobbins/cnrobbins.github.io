@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
+import Img from '../components/Img.astro';
+import profilePhoto from '../assets/images/pfp2.jpg';
 ---
 
 <Layout title="Calder Robbins - Biomechanics & Robotics Researcher">
@@ -43,7 +45,7 @@ import FeaturedCarousel from '../components/FeaturedCarousel.astro';
         <!-- Photo: placed here so mobile order is description → photo → skills → CV -->
         <div class="about-visual">
           <div class="about-image">
-            <img src="/assets/pfp2.jpg" alt="CN Robbins" class="profile-img" />
+            <Img src={profilePhoto} alt="CN Robbins" class="profile-img" sizes="(max-width: 768px) 280px, (max-width: 1024px) 768px, 422px" />
             <div class="image-overlay"></div>
           </div>
         </div>
@@ -101,10 +103,7 @@ import FeaturedCarousel from '../components/FeaturedCarousel.astro';
       </div>
 
       <div class="projects-cta">
-        <a href="/projects" class="btn btn--outline">
-          <span class="btn-text">View All Projects</span>
-          <span class="btn-arrow">→</span>
-        </a>
+        <a href="/projects" class="btn btn--primary">View All Projects</a>
       </div>
     </div>
   </section>
@@ -114,10 +113,7 @@ import FeaturedCarousel from '../components/FeaturedCarousel.astro';
     <div class="container">
       <div class="cta-content">
         <h2 class="cta-title">Contact Me</h2>
-        <a href="mailto:robbins.cal@northeastern.edu" class="btn btn--primary btn--large">
-          <span class="btn-text">Email</span>
-          <span class="btn-arrow">→</span>
-        </a>
+        <a href="mailto:robbins.cal@northeastern.edu" class="btn btn--primary btn--large">Email</a>
       </div>
     </div>
   </section>

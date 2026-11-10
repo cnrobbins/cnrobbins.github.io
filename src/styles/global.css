@@ -127,7 +127,7 @@ ol {
 .nav-logo {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-accent);
+  color: var(--color-highlight, var(--color-accent));
   text-decoration: none;
   font-family: var(--font-family-mono);
 }
@@ -157,7 +157,7 @@ ol {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--color-accent);
+  background: var(--color-highlight, var(--color-accent));
   transition: width var(--duration-normal) var(--ease-out);
 }
 
@@ -165,49 +165,25 @@ ol {
   width: 100%;
 }
 
-.nav-theme {
-  display: flex;
-  align-items: center;
-}
-
+/* Dark-mode toggle (right side of the nav). The visible word is the mode it
+   switches to; the other word is hidden. */
 .theme-toggle {
-  position: relative;
-  width: 48px;
-  height: 24px;
-  background: var(--color-bg-tertiary);
-  border-radius: var(--border-radius-full);
-  border: none;
-  cursor: pointer;
-  transition: background var(--duration-normal) var(--ease-out);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--duration-normal) var(--ease-out);
 }
 
 .theme-toggle:hover {
-  background: var(--color-accent);
+  color: var(--color-text-primary);
 }
 
-.theme-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: all var(--duration-normal) var(--ease-out);
+.theme-toggle-light,
+:root[data-theme="dark"] .theme-toggle-dark {
+  display: none;
 }
 
-.theme-icon--light {
-  left: 4px;
-  opacity: 1;
-}
-
-.theme-icon--dark {
-  right: 4px;
-  opacity: 0;
-}
-
-[data-theme="dark"] .theme-icon--light {
-  opacity: 0;
-}
-
-[data-theme="dark"] .theme-icon--dark {
-  opacity: 1;
+:root[data-theme="dark"] .theme-toggle-light {
+  display: inline;
 }
 
 /* Loading screen */
@@ -230,53 +206,6 @@ ol {
   transform: scale(3.0);
 }
 
-/* Custom cursor (commented out; uncomment with Layout.astro cursor divs + app.js initCustomCursor to restore)
-.cursor,
-.cursor-follower {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: var(--z-tooltip);
-  mix-blend-mode: difference;
-}
-
-.cursor.on-hover {
-  mix-blend-mode: normal;
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.cursor-follower.on-hover {
-  mix-blend-mode: normal;
-  border-color: rgba(0, 0, 0, 0.2);
-}
-
-.cursor {
-  background: var(--color-accent);
-  transform: translate(-50%, -50%);
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.cursor-follower {
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--color-accent);
-  background: transparent;
-  transform: translate(-50%, -50%);
-  transition: all var(--duration-normal) var(--ease-out);
-}
-
-@media (hover: none) {
-  .cursor,
-  .cursor-follower {
-    display: none;
-  }
-}
-*/
-
 /* Main content */
 .main {
   padding-top: 80px; /* Account for fixed nav */
@@ -284,7 +213,7 @@ ol {
 
 /* Footer */
 .footer {
-  background: var(--color-bg-secondary);
+  background: var(--color-section-bg);
   border-top: var(--border-width) solid var(--color-bg-tertiary);
   padding: var(--space-2xl) 0;
   margin-top: var(--space-5xl);
@@ -312,7 +241,7 @@ ol {
 }
 
 .footer-links a:hover {
-  color: var(--color-accent);
+  color: var(--color-link-hover);
 }
 
 /* Responsive navigation */
@@ -321,7 +250,8 @@ ol {
     gap: var(--space-md);
   }
 
-  .nav-link {
+  .nav-link,
+  .theme-toggle {
     font-size: var(--font-size-sm);
   }
 
@@ -338,22 +268,3 @@ ol {
   }
 }
 
-/* Utility classes */
-.text-gradient {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.visually-hidden {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-} 
