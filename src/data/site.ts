@@ -15,6 +15,15 @@ export const PROFILE_LINKS = [
   { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=EdbE5wwAAAAJ&hl=en' },
 ];
 
+/** Profiles listed in structured data only (not shown in the footer). */
+const EXTRA_PROFILE_URLS = ['https://orcid.org/0009-0003-2857-9309'];
+
+const NORTHEASTERN = {
+  '@type': 'CollegeOrUniversity',
+  name: 'Northeastern University',
+  url: 'https://www.northeastern.edu/',
+};
+
 /** Profile photo as a JPEG at most 1200 px wide, as an absolute URL (link previews, structured data). */
 export async function shareImageUrl(): Promise<string> {
   const image = await getImage({
@@ -46,10 +55,12 @@ export async function personStructuredData() {
         image: await shareImageUrl(),
         jobTitle: 'Biomechanics & Robotics Researcher',
         description: SITE_DESCRIPTION,
-        affiliation: {
-          '@type': 'Organization',
-          name: 'Northeastern University',
-          url: 'https://www.northeastern.edu/',
+        affiliation: NORTHEASTERN,
+        memberOf: {
+          '@type': 'ResearchOrganization',
+          name: 'NeuMove Lab',
+          url: 'https://neumove.org/',
+          parentOrganization: NORTHEASTERN,
         },
         alumniOf: {
           '@type': 'CollegeOrUniversity',
@@ -63,7 +74,7 @@ export async function personStructuredData() {
           'Exoskeletons',
           'Rehabilitation engineering',
         ],
-        sameAs: PROFILE_LINKS.map((link) => link.url),
+        sameAs: [...PROFILE_LINKS.map((link) => link.url), ...EXTRA_PROFILE_URLS],
       },
     ],
   };
