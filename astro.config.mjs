@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://cnrobbins.github.io',
+  site: 'https://calderrobbins.com',
   integrations: [sitemap()],
   build: {
     assets: 'assets',
