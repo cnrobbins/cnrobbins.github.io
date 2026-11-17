@@ -6,6 +6,7 @@ import '../styles/global.css';
 import '../styles/components.css';
 import '../styles/page-themes/myoassist.css';
 import { ACTIVE_PALETTE, PAGE_THEMES, PALETTES, type PageThemeName, type Section } from '../theme.config';
+import { PROFILE_LINKS, SITE_DESCRIPTION, SITE_NAME, shareImageUrl } from '../data/site';
 
 export interface Props {
   title: string;
@@ -14,9 +15,17 @@ export interface Props {
   section?: Section;
   /** Page-specific look (see PAGE_THEMES in theme.config.ts). */
   pageTheme?: PageThemeName;
+  /** schema.org JSON-LD for search engines (the home page passes the Person graph). */
+  structuredData?: object;
 }
 
-const { title, description = 'Calder Robbins', section, pageTheme } = Astro.props;
+const { title, description = SITE_DESCRIPTION, section, pageTheme, structuredData } = Astro.props;
+
+// Every page is built as a directory (/projects/), so the canonical URL ends in a slash,
+// matching the sitemap.
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(path, Astro.site).href;
+const shareImage = await shareImageUrl();
 
 const palette = PALETTES[ACTIVE_PALETTE];
 const paletteDark = 'themeColorDark' in palette ? palette.themeColorDark : undefined;
@@ -46,6 +55,18 @@ const htmlClass = [section && `section-${section}`, pageTheme && `theme-${pageTh
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
     <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Link previews (LinkedIn, Slack, iMessage, etc.) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={shareImage} />
+    <meta name="twitter:card" content="summary" />
+
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 
     <meta name="theme-color" content={themeColor} data-light={themeColor} data-dark={themeColorDark} />
     <meta name="color-scheme" content={hasDarkMode ? 'light dark' : 'light'} />
@@ -107,11 +128,11 @@ const htmlClass = [section && `section-${section}`, pageTheme && `theme-${pageTh
 
     <footer class="footer">
       <div class="footer-content">
-        <p>&copy; {new Date().getFullYear()} Calder Robbins</p>
+        <p>&copy; {new Date().getFullYear()} {SITE_NAME}</p>
         <div class="footer-links">
-          <a href="https://github.com/cnrobbins" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.linkedin.com/in/calder-robbins/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://scholar.google.com/citations?user=EdbE5wwAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+          {PROFILE_LINKS.map((link) => (
+            <a href={link.url} target="_blank" rel="noopener">{link.label}</a>
+          ))}
           <a href="mailto:robbins.cal@northeastern.edu">Email</a>
         </div>
       </div>

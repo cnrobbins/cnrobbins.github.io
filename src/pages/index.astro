@@ -3,15 +3,18 @@ import Layout from '../layouts/Layout.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
 import Img from '../components/Img.astro';
 import profilePhoto from '../assets/images/pfp2.jpg';
+import { personStructuredData } from '../data/site';
 ---
 
-<Layout title="Calder Robbins - Biomechanics & Robotics Researcher">
+<Layout title="Calder Robbins - Biomechanics & Robotics Researcher" structuredData={await personStructuredData()}>
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="hero-content">
       <div class="hero-text">
-        <p class="hero-name">Calder Robbins</p>
-        <h1 class="hero-title">
+        {/* The name is the page's h1 so search engines read this as Calder Robbins's page.
+            Both elements are styled only by class, so swapping the tags looks identical. */}
+        <h1 class="hero-name">Calder Robbins</h1>
+        <p class="hero-title">
           <span class="hero-line">
             <span class="hero-word" data-text="Biomechanics">Biomechanics</span>
             <span class="hero-word" data-text="& Robotics">& Robotics</span>
@@ -19,13 +22,13 @@ import profilePhoto from '../assets/images/pfp2.jpg';
           <span class="hero-line">
             <span class="hero-word" data-text="Researcher">Researcher</span>
           </span>
-        </h1>
+        </p>
         <p class="hero-subtitle">
           Developing assistive technologies through neuromechanical simulation to enhance human mobility
         </p>
       </div>
       <div class="hero-visual">
-        <img src="/assets/skeleton_walking_v2.gif" alt="Dynamic animation" />
+        <img src="/assets/skeleton_walking_v2.gif" alt="Animated walking skeleton" />
       </div>
     </div>
   </section>
@@ -45,7 +48,7 @@ import profilePhoto from '../assets/images/pfp2.jpg';
         <!-- Photo: placed here so mobile order is description → photo → skills → CV -->
         <div class="about-visual">
           <div class="about-image">
-            <Img src={profilePhoto} alt="CN Robbins" class="profile-img" sizes="(max-width: 768px) 280px, (max-width: 1024px) 768px, 422px" />
+            <Img src={profilePhoto} alt="Calder Robbins" class="profile-img" sizes="(max-width: 768px) 280px, (max-width: 1024px) 768px, 422px" />
             <div class="image-overlay"></div>
           </div>
         </div>
