@@ -87,7 +87,12 @@ const htmlClass = [section && `section-${section}`, pageTheme && `theme-${pageTh
       })();
     </script>
 
+    <!-- Icons: modern browsers show the SVG. favicon.ico and apple-touch-icon.png
+         are raster fallbacks made from it (scripts/make-favicons.mjs).
+         sizes="32x32" stops Chrome from preferring the .ico over the SVG. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href={palette.favicon} />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body>
     <!-- Loading screen (shown once per browser session; see app.js) -->
