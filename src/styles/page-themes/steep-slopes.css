@@ -1,0 +1,37 @@
+/* Steep Slopes project page: coral accent (#fe4d55). Light mode keeps the
+   site's backgrounds; dark mode uses the MyoAssist page's charcoal backgrounds,
+   with white page titles and coral subheadings.
+
+   Applied by `theme: 'steep-slopes'` in the project's page data (html class
+   .theme-steep-slopes). Like myoassist.css, the class outranks the palette's
+   :where() rules and the .section-* classes, so these values win on this page
+   only. */
+:root.theme-steep-slopes {
+  --color-accent: #fe4d55;
+  --color-accent-hover: #d8323b;
+  --color-section-current: #fe4d55;
+  --color-section-papers: #fe4d55;
+  --color-section-previous: #fe4d55;
+
+  --color-link-hover: var(--color-accent);
+}
+
+:root.theme-steep-slopes[data-theme="dark"] {
+  --color-bg-primary: #27262b;
+  --color-bg-secondary: #302d36;
+  --color-bg-tertiary: #44434d;
+  --color-text-primary: #f5f6fa;
+  --color-text-secondary: #e6e1e8;
+  --color-text-tertiary: #959396;
+
+  /* Coral is light enough to use as is for text, borders and lines on charcoal. */
+  --color-accent: #fe4d55;
+  --color-accent-hover: #ff6b72;
+  --color-highlight: #fe4d55;
+  --color-link-hover: #ff8a8f;
+  --color-page-title: var(--color-text-primary);
+
+  --color-legacy-panel: #f5f6fa;
+  --glass-bg: rgba(39, 38, 43, 0.1);
+  --glass-border: rgba(39, 38, 43, 0.2);
+}

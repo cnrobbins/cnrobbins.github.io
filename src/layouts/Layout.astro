@@ -5,8 +5,10 @@ import '../styles/palettes/classic.css';
 import '../styles/global.css';
 import '../styles/components.css';
 import '../styles/page-themes/myoassist.css';
+import '../styles/page-themes/steep-slopes.css';
 import { ACTIVE_PALETTE, PAGE_THEMES, PALETTES, type PageThemeName, type Section } from '../theme.config';
 import { PROFILE_LINKS, SITE_DESCRIPTION, SITE_NAME, shareImageUrl } from '../data/site';
+import LogoMark from '../assets/logo.svg';
 
 export interface Props {
   title: string;
@@ -35,6 +37,8 @@ const themeColor = pageTheme
   : section ? palette.sectionColors[section] : palette.themeColor;
 const themeColorDark = pageTheme && hasDarkMode ? PAGE_THEMES[pageTheme].themeColorDark : paletteDark;
 const htmlClass = [section && `section-${section}`, pageTheme && `theme-${pageTheme}`].filter(Boolean).join(' ') || undefined;
+// Built from the logo in the page's colors (src/pages/favicons/[name].svg.ts).
+const faviconHref = `/favicons/${pageTheme ?? ACTIVE_PALETTE}.svg`;
 ---
 
 <!DOCTYPE html>
@@ -87,11 +91,12 @@ const htmlClass = [section && `section-${section}`, pageTheme && `theme-${pageTh
       })();
     </script>
 
-    <!-- Icons: modern browsers show the SVG. favicon.ico and apple-touch-icon.png
-         are raster fallbacks made from it (scripts/make-favicons.mjs).
+    <!-- Icons, all made from src/assets/logo.svg: modern browsers show the SVG in
+         this page's colors. favicon.ico and apple-touch-icon.png are raster
+         fallbacks (scripts/make-favicons.mjs).
          sizes="32x32" stops Chrome from preferring the .ico over the SVG. -->
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" type="image/svg+xml" href={palette.favicon} />
+    <link rel="icon" type="image/svg+xml" href={faviconHref} />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body>
@@ -102,7 +107,9 @@ const htmlClass = [section && `section-${section}`, pageTheme && `theme-${pageTh
 
     <nav class="nav" id="nav">
       <div class="nav-brand">
-        <a href="/" class="nav-logo">CR</a>
+        <a href="/" class="nav-logo" aria-label={`${SITE_NAME}, home`}>
+          <LogoMark class="nav-logo-mark" aria-hidden="true" />
+        </a>
       </div>
       <ul class="nav-links">
         <li><a href="/#hero" class="nav-link">Home</a></li>

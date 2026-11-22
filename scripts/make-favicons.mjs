@@ -1,25 +1,29 @@
-// Regenerates the raster favicon fallbacks from the SVG favicon.
-// Run from the repo root after changing the SVG:  node scripts/make-favicons.mjs
+// Regenerates the raster favicon fallbacks from the logo (src/assets/logo.svg).
+// Run from the repo root after changing the logo:  node scripts/make-favicons.mjs
 //
 //   public/favicon.ico           16, 32 and 48 px PNGs in one .ico (browsers
 //                                without SVG favicons, and search crawlers)
-//   public/apple-touch-icon.png  180 px full-bleed square (iOS home screen;
-//                                iOS rounds the corners itself)
+//   public/apple-touch-icon.png  180 px, logo on a white square (iOS home
+//                                screen; iOS rounds the corners itself)
 //
-// Modern browsers keep using the SVG (see the icon links in Layout.astro).
+// Both use the active palette's logo color. Modern browsers use the SVG
+// favicons built from the same logo (src/pages/favicons/[name].svg.ts).
 import sharp from 'sharp';
 import { readFile, writeFile } from 'node:fs/promises';
+import { squareLogoSvg } from '../src/lib/logo-svg.mjs';
+import { ACTIVE_PALETTE, PALETTES } from '../src/theme.config.ts';
 
-const SVG = 'public/favicons/blue.svg';
-const SVG_VIEWBOX = 32; // the SVG's viewBox width
-const CORNER_FILL = '#325fbf'; // the SVG's background color; fills the rounded corners on iOS
+const COLOR = PALETTES[ACTIVE_PALETTE].logo.light;
+const TOUCH_BACKGROUND = '#ffffff';
+const TOUCH_PADDING = 0.15; // empty margin on each side of the iOS icon
 
-const svg = await readFile(SVG);
+const logo = await readFile('src/assets/logo.svg', 'utf8');
 
 // Render at 4x the target size, then downscale, for clean small icons.
-const png = (size, flatten) => {
-  let image = sharp(svg, { density: (72 * size * 4) / SVG_VIEWBOX }).resize(size, size);
-  if (flatten) image = image.flatten({ background: flatten });
+const png = (size, { padding = 0, background } = {}) => {
+  const svg = squareLogoSvg(logo, { color: COLOR, padding, size: size * 4 });
+  let image = sharp(Buffer.from(svg)).resize(size, size);
+  if (background) image = image.flatten({ background });
   return image.png().toBuffer();
 };
 
@@ -44,5 +48,8 @@ const entries = images.map((data, i) => {
 });
 
 await writeFile('public/favicon.ico', Buffer.concat([header, ...entries, ...images]));
-await writeFile('public/apple-touch-icon.png', await png(180, CORNER_FILL));
+await writeFile(
+  'public/apple-touch-icon.png',
+  await png(180, { padding: TOUCH_PADDING, background: TOUCH_BACKGROUND }),
+);
 console.log(`wrote public/favicon.ico (${sizes.join(', ')} px) and public/apple-touch-icon.png (180 px)`);

@@ -125,11 +125,22 @@ ol {
 }
 
 .nav-logo {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
   color: var(--color-highlight, var(--color-accent));
   text-decoration: none;
-  font-family: var(--font-family-mono);
+}
+
+/* The logo (src/assets/logo.svg) takes the link's color, so it follows the
+   palette, dark mode and page themes. CSS outranks the artwork's own fills. */
+.nav-logo-mark {
+  display: block;
+  height: 1.5rem;
+  width: auto;
+}
+
+.nav-logo-mark * {
+  fill: currentColor;
 }
 
 .nav-links {

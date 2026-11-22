@@ -1,27 +1,37 @@
 ---
 // Full write-up for a project that has `page` data (see src/data/projects/).
 // Layout: title + role, wide banner, intro, links, then sections of
-// alternating image/text rows (same rows as the /projects list) and an optional
-// closing paragraph per section.
+// alternating image/text rows (same rows as the /projects list), full-width
+// figure rows (layout: 'wide'), and an optional closing paragraph per section.
 import Img from './Img.astro';
 import type { Project, ProjectPageData } from '../data/projects/types';
 
 interface Props {
   project: Project & { page: ProjectPageData };
+  /** "Back to ..." link to the project's list on /projects. */
+  backLink: { href: string; label: string };
 }
 
-const { project } = Astro.props;
+const { project, backLink } = Astro.props;
 const page = project.page;
 const rowImageSizes = '(max-width: 768px) 56vw, (max-width: 1024px) 320px, 440px';
+const wideImageSizes = '(max-width: 1200px) 100vw, 1152px';
 ---
 
 <div class="container project-page-container project-page">
-  <a href="/projects#current-work" class="project-back-link">Back to Current Work</a>
+  <a href={backLink.href} class="project-back-link">{backLink.label}</a>
 
   <h1 class="page-title">{project.title}</h1>
-  {page.role && <p class="project-role">{page.role}</p>}
+  {page.role && (
+    <p class="project-role">
+      {page.role}{page.paper && <> — <em>{page.paper}</em></>}
+    </p>
+  )}
 
-  <div class="project-banner" style={`--banner-position: ${page.banner.position ?? 'center'}`}>
+  <div
+    class:list={['project-banner', { 'project-banner--whole': page.banner.crop === false }]}
+    style={`--banner-position: ${page.banner.position ?? 'center'}`}
+  >
     <Img
       src={page.banner.image}
       alt={page.banner.alt}
@@ -47,9 +57,10 @@ const rowImageSizes = '(max-width: 768px) 56vw, (max-width: 1024px) 320px, 440px
     <section class="project-page-section">
       <h2 class="section-title" data-text={section.title}>{section.title}</h2>
 
+      {section.features.length > 0 && (
       <div class="project-summaries">
         {section.features.map((feature) => (
-          <div class="project-summary-item">
+          <div class:list={['project-summary-item', { 'project-summary-item--wide': feature.layout === 'wide' }]}>
             <div class="project-summary-image">
               {feature.media.type === 'video' ? (
                 // Plays only while on screen (see initVideos in app.js); never autoplays
@@ -68,12 +79,29 @@ const rowImageSizes = '(max-width: 768px) 56vw, (max-width: 1024px) 320px, 440px
                 >
                   {feature.media.sources.map((source) => <source src={source.src} type={source.type} />)}
                 </video>
+              ) : feature.media.type === 'gallery' ? (
+                // Each photo's flex-grow is its aspect ratio, so all come out the same height.
+                <div class="project-gallery">
+                  {feature.media.images.map((item) => (
+                    <div class="project-gallery-item" style={`flex-grow: ${item.image.width / item.image.height}`}>
+                      <Img src={item.image} alt={item.alt} sizes="(max-width: 768px) 50vw, 240px" />
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <Img
                   src={feature.media.image}
                   alt={feature.media.alt}
-                  class={feature.media.darkPanel ? 'dark-panel' : undefined}
-                  sizes={rowImageSizes}
+                  class:list={[
+                    { 'dark-panel': feature.media.darkPanel },
+                    // Wider than the 4:3 frame: let the box hug the image so the dark-mode
+                    // panel does too (the image itself is drawn at the same size either way).
+                    {
+                      'project-row-img--wide':
+                        feature.media.darkPanel && feature.media.image.width / feature.media.image.height > 4 / 3,
+                    },
+                  ]}
+                  sizes={feature.layout === 'wide' ? wideImageSizes : rowImageSizes}
                 />
               )}
             </div>
@@ -84,6 +112,7 @@ const rowImageSizes = '(max-width: 768px) 56vw, (max-width: 1024px) 320px, 440px
           </div>
         ))}
       </div>
+      )}
 
       {section.closing && (
         <div class="project-closing">

@@ -1,0 +1,96 @@
+---
+// About-section photo: the profile photo first, then the others in turn, each
+// fading in over the last every 30 seconds, or right away on click / Enter /
+// Space (no captions or controls). Every photo fills the profile photo's 3:4
+// frame; other shapes are cropped to fit.
+import Img from './Img.astro';
+import profilePhoto from '../assets/images/pfp2.jpg';
+import dogs from '../assets/images/about/dogs.jpg';
+import hugo from '../assets/images/about/hugo.jpg';
+
+const photos = [
+  { image: profilePhoto, alt: 'Calder Robbins' },
+  { image: dogs, alt: 'My two dogs looking up at the camera on a wooded trail' },
+  { image: hugo, alt: 'My cat, Hugo, perched on the arm of a chair' },
+];
+const sizes = '(max-width: 768px) 280px, (max-width: 1024px) 768px, 422px';
+---
+
+<div
+  class="about-image"
+  data-photo-rotator
+  data-interval="30000"
+  role="button"
+  tabindex="0"
+  aria-label={`${photos[0].alt} (show next photo)`}
+>
+  {photos.map((photo, i) => (
+    <Img src={photo.image} alt={photo.alt} class={i === 0 ? 'profile-img is-active' : 'profile-img'} sizes={sizes} />
+  ))}
+  <div class="image-overlay"></div>
+</div>
+
+<script>
+  // Show the next photo every data-interval ms, or on click / Enter / Space
+  // (which also restarts the timer). The timer pauses while the tab is hidden,
+  // and visitors who prefer reduced motion get no timer, only clicks.
+  // Photos load lazily: each one is fetched while the previous one shows. If a
+  // photo still isn't loaded when the timer reaches it, it waits a turn; on a
+  // click it appears as soon as it loads (never a blank frame).
+  document.querySelectorAll<HTMLElement>('[data-photo-rotator]').forEach((root) => {
+    const photos = Array.from(root.querySelectorAll<HTMLImageElement>('img.profile-img'));
+    if (photos.length < 2) return;
+
+    const interval = Number(root.dataset.interval) || 30000;
+    const autoRotate = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let index = 0;
+    let timer: number | undefined;
+
+    const fetchPhoto = (i: number) => {
+      photos[i].loading = 'eager';
+    };
+    const show = (i: number) => {
+      photos[index].classList.remove('is-active');
+      index = i;
+      photos[index].classList.add('is-active');
+      // The photos are hidden from screen readers inside role="button", so the
+      // button's label names the photo on show.
+      root.setAttribute('aria-label', `${photos[index].alt} (show next photo)`);
+      fetchPhoto((index + 1) % photos.length);
+    };
+    const advance = (waitForLoad: boolean) => {
+      const upcoming = (index + 1) % photos.length;
+      if (photos[upcoming].complete) {
+        show(upcoming);
+        return;
+      }
+      fetchPhoto(upcoming);
+      if (waitForLoad) {
+        photos[upcoming].addEventListener('load', () => index !== upcoming && show(upcoming), { once: true });
+      }
+    };
+
+    const start = () => {
+      if (autoRotate && timer === undefined) timer = window.setInterval(() => advance(false), interval);
+    };
+    const stop = () => {
+      window.clearInterval(timer);
+      timer = undefined;
+    };
+    const advanceNow = () => {
+      advance(true);
+      stop();
+      start();
+    };
+
+    root.addEventListener('click', advanceNow);
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        advanceNow();
+      }
+    });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    start();
+  });
+</script>

@@ -9,7 +9,7 @@ import Img from './Img.astro';
       {currentProjects.map((project, i) => (
         <li class="carousel-slide" data-carousel-slide aria-roledescription="slide" aria-label={`${i + 1} of ${currentProjects.length}`}>
           <a href={`/projects/${project.slug}`} class="carousel-card">
-            <Img class="carousel-img" src={project.image} alt={project.title} sizes="(max-width: 768px) 100vw, 720px" loading="eager" />
+            <Img class="carousel-img" src={project.image} alt={project.title} sizes="(max-width: 768px) 100vw, 460px" loading="eager" />
             <div class="carousel-caption">
               <h3 class="carousel-title">{project.title}</h3>
               <p class="carousel-blurb">{project.blurb}</p>

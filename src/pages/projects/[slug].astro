@@ -3,28 +3,43 @@ import Layout from '../../layouts/Layout.astro';
 import Img from '../../components/Img.astro';
 import ProjectPage from '../../components/ProjectPage.astro';
 import { currentProjects } from '../../data/currentProjects.js';
+import { previousProjects } from '../../data/previousProjects.js';
 
+// Every Current Work project gets a page (a placeholder until it has `page`
+// data); a Previous Work project gets one only once it has `page` data.
 export function getStaticPaths() {
-  return currentProjects.map((project) => ({
-    params: { slug: project.slug },
-    props: { project },
-  }));
+  return [
+    ...currentProjects.map((project) => ({
+      params: { slug: project.slug },
+      props: { project, section: 'current' as const },
+    })),
+    ...previousProjects
+      .filter((project) => project.page)
+      .map((project) => ({
+        params: { slug: project.slug },
+        props: { project, section: 'previous' as const },
+      })),
+  ];
 }
 
-const { project } = Astro.props;
+const { project, section } = Astro.props;
+const backLink =
+  section === 'previous'
+    ? { href: '/projects#previous-work', label: 'Back to Previous Work' }
+    : { href: '/projects#current-work', label: 'Back to Current Work' };
 ---
 
 <Layout
   title={`${project.title} - Calder Robbins`}
   description={project.blurb}
-  section="current"
+  section={section}
   pageTheme={project.page?.theme}
 >
   {project.page ? (
-    <ProjectPage project={{ ...project, page: project.page }} />
+    <ProjectPage project={{ ...project, page: project.page }} backLink={backLink} />
   ) : (
     <div class="container project-page-container project-detail">
-      <a href="/projects#current-work" class="project-back-link">Back to Current Work</a>
+      <a href={backLink.href} class="project-back-link">{backLink.label}</a>
 
       <h1 class="page-title">{project.title}</h1>
 

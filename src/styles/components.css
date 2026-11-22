@@ -210,19 +210,37 @@
      Explicit because a responsive image's natural width is not its file width. */
   width: 768px;
   max-width: 100%;
+  /* The profile photo's shape, shared by every photo in the rotation
+     (AboutPhotos.astro). */
+  aspect-ratio: 3 / 4;
   border-radius: var(--border-radius-2xl);
   overflow: hidden;
   box-shadow: var(--shadow-xl);
+  cursor: pointer; /* click shows the next photo */
 }
 
+/* Photos are stacked; the active one fades in on top, and the one it replaces
+   fades out only afterwards, so the page never shows through mid-change. */
 .profile-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
+  opacity: 0;
+  transition: opacity 1s var(--ease-in-out) 1s;
+}
+
+.profile-img.is-active {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 1s var(--ease-in-out);
 }
 
 .image-overlay {
   position: absolute;
+  z-index: 2;
   top: 0;
   left: 0;
   width: 100%;
@@ -505,20 +523,25 @@
 
 .carousel-card {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   aspect-ratio: 16 / 9;
+  padding: var(--space-xl);
   background: var(--color-figure-bg);
   text-decoration: none;
   color: #fff;
 }
 
+/* Same invisible 4:3 frame as the project images on /projects (see
+   .project-summary-image img): each image is scaled to fit inside it, never
+   stretched or cropped, so wide and tall figures come out at a similar size. */
 .carousel-img {
-  width: 100%;
   height: 100%;
-  padding: var(--space-xl);
-  box-sizing: border-box;
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: contain;
-  background: var(--color-figure-bg);
 }
 
 .carousel-caption {
@@ -747,6 +770,80 @@
 
 .project-closing {
   margin-top: var(--space-3xl);
+}
+
+/* A text-only section (no rows): the closing text sits right under the title. */
+.project-page-section > .section-title + .project-closing {
+  margin-top: 0;
+}
+
+.project-closing .project-summary-description + .project-summary-description {
+  margin-top: var(--space-md);
+}
+
+/* Banner shown whole (crop: false) with no frame, for cut-outs on a transparent
+   background that a 3:1 crop would cut, such as a row of products. */
+.project-banner--whole {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.project-banner--whole .project-banner-img {
+  aspect-ratio: auto;
+}
+
+.project-summary-image img.project-row-img--wide {
+  aspect-ratio: auto;
+}
+
+/* Photos side by side in one row (media type 'gallery'), in the same width as a
+   single row image. */
+.project-gallery {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  width: min(440px, 100%);
+  margin: 0 auto;
+}
+
+.project-gallery-item {
+  flex-basis: 0;
+  min-width: 0;
+}
+
+.project-summary-image .project-gallery-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+}
+
+/* Full-width row (layout: 'wide'): heading, then the figure across the page,
+   then the text. The content wrapper is dissolved so the heading can move
+   above the figure. */
+.project-summary-item.project-summary-item--wide {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.project-summary-item--wide .project-summary-content {
+  display: contents;
+}
+
+.project-summary-item--wide .project-summary-title {
+  order: -1;
+}
+
+.project-summary-item.project-summary-item--wide .project-summary-image {
+  order: 0;
+  width: 100%;
+  margin-bottom: var(--space-xl);
+}
+
+.project-summary-item--wide .project-summary-image img {
+  width: 100%;
+  aspect-ratio: auto;
 }
 
 .project-video {

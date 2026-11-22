@@ -1,8 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import FeaturedCarousel from '../components/FeaturedCarousel.astro';
-import Img from '../components/Img.astro';
-import profilePhoto from '../assets/images/pfp2.jpg';
+import AboutPhotos from '../components/AboutPhotos.astro';
 import { personStructuredData } from '../data/site';
 ---
 
@@ -24,7 +23,7 @@ import { personStructuredData } from '../data/site';
           </span>
         </p>
         <p class="hero-subtitle">
-          Developing assistive technologies through neuromechanical simulation to enhance human mobility
+          Design, control, and simulation of wearable robots for human mobility
         </p>
       </div>
       <div class="hero-visual">
@@ -41,16 +40,19 @@ import { personStructuredData } from '../data/site';
           <h2 class="section-title" data-text="About Me">About Me</h2>
           <div class="about-description">
             <p class="fade-in">
-              A native of Western Massachusetts, I attended UMass Amherst for both my B.S. in Biomedical Engineering (2023) and my M.S. in Mechanical Engineering (2024). Working under the guidance of Prof. Wouter Hoogkamer in the UMass Kinesiology Department, I studied human biomechanics and performance running footwear. Then under the joint guidance of Prof. Hoogkamer and Prof. Meghan Huber, I worked on a variable stiffness footwear project and was eager to dive more into the world of wearable devices for rehabilitation and human-centered robotics. I now work in Northeastern's NeuMove Laboratory under Prof. Seungmoon Song where I study biomechanics, neuromechanical simulation, and rehabilitative device design and control. Outside of class and lab work, I am a passionate wildlife photographer, and love biking and hiking with my two dogs.
+              I'm a graduate researcher in Northeastern University's NeuMove Laboratory, advised by Prof. Seungmoon Song, where my work focuses on the design, control, and simulation of wearable robotics. My thesis centers on advancing ankle exoskeleton design and control, combining hardware development, musculoskeletal modeling, and ML control frameworks.
+            </p>
+            <p>
+              My path to wearable robotics started in biomechanics. I earned my B.S. in Biomedical Engineering (2023) and M.S. in Mechanical Engineering (2024) at UMass Amherst, studying performance running footwear with Prof. Wouter Hoogkamer and developing variable stiffness footwear with Prof. Meghan Huber.
+            </p>
+            <p>
+              Outside the lab, I'm an avid wildlife photographer and spend as much time as I can biking, hiking with my two dogs, or listening to records with my cat.
             </p>
           </div>
         </div>
         <!-- Photo: placed here so mobile order is description → photo → skills → CV -->
         <div class="about-visual">
-          <div class="about-image">
-            <Img src={profilePhoto} alt="Calder Robbins" class="profile-img" sizes="(max-width: 768px) 280px, (max-width: 1024px) 768px, 422px" />
-            <div class="image-overlay"></div>
-          </div>
+          <AboutPhotos />
         </div>
         <div class="about-bottom">
           <div class="about-skills">
